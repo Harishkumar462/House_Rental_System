@@ -230,6 +230,7 @@
     <Content Include="Views\Customer\Profile.cshtml" />
     <Content Include="Views\Customer\EditProfile.cshtml" />
     <Content Include="Views\Seller\DeleteProperty.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
