@@ -1,0 +1,79 @@
+﻿@model House_Rental_System.Models.Customer_Details
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_SellerLayout.cshtml";
+}
+
+<h2>Profile</h2>
+
+<div>
+    <h4>Customer_Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Profile)
+        </dt>
+
+        <dd>
+            @{
+                var base64 = Convert.ToBase64String(ViewBag.image);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+            }
+            <img src='@imgsrc' style="height:100px;width:100px;" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Password)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditProfile", new { id = Model.Customer_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

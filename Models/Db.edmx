@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="House_Rental_SystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer_Details">
+          <Key>
+            <PropertyRef Name="Customer_Id" />
+          </Key>
+          <Property Name="Customer_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_Phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_State" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_Profile" Type="varbinary(max)" />
+          <Property Name="Customer_Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Property_Details">
+          <Key>
+            <PropertyRef Name="Property_ID" />
+          </Key>
+          <Property Name="Property_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Property_Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Property_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Property_Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Property_State" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Property_City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Property_Pin" Type="int" Nullable="false" />
+          <Property Name="Property_Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Seller_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Property_Images">
+          <Key>
+            <PropertyRef Name="img_id" />
+          </Key>
+          <Property Name="img_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Property_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seller_Details">
+          <Key>
+            <PropertyRef Name="Seller_ID" />
+          </Key>
+          <Property Name="Seller_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Seller_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Seller_Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Seller_Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Seller_state" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Seller_Photo" Type="varbinary(max)" />
+          <Property Name="Seller_Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Property_Details_Seller_Details">
+          <End Role="Seller_Details" Type="Self.Seller_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller_Details">
+              <PropertyRef Name="Seller_ID" />
+            </Principal>
+            <Dependent Role="Property_Details">
+              <PropertyRef Name="Seller_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_Images_Property_Details">
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Property_Images" Type="Self.Property_Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property_Details">
+              <PropertyRef Name="Property_ID" />
+            </Principal>
+            <Dependent Role="Property_Images">
+              <PropertyRef Name="Property_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="House_Rental_SystemModelStoreContainer">
+          <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Property_Details" EntityType="Self.Property_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Property_Images" EntityType="Self.Property_Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seller_Details" EntityType="Self.Seller_Details" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Property_Details_Seller_Details" Association="Self.FK_Property_Details_Seller_Details">
+            <End Role="Seller_Details" EntitySet="Seller_Details" />
+            <End Role="Property_Details" EntitySet="Property_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Images_Property_Details" Association="Self.FK_Property_Images_Property_Details">
+            <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Property_Images" EntitySet="Property_Images" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="House_Rental_SystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer_Details">
+          <Key>
+            <PropertyRef Name="Customer_Id" />
+          </Key>
+          <Property Name="Customer_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_Profile" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Customer_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Seller_Details">
+          <Key>
+            <PropertyRef Name="Seller_ID" />
+          </Key>
+          <Property Name="Seller_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Seller_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seller_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seller_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Seller_state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seller_Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Seller_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Property_Details_Seller_Details" FromRole="Seller_Details" ToRole="Property_Details" />
+        </EntityType>
+        <EntityContainer Name="House_Rental" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" />
+          <EntitySet Name="Seller_Details" EntityType="Self.Seller_Details" />
+          <EntitySet Name="Property_Details" EntityType="House_Rental_SystemModel.Property_Details" />
+          <AssociationSet Name="FK_Property_Details_Seller_Details" Association="House_Rental_SystemModel.FK_Property_Details_Seller_Details">
+            <End Role="Seller_Details" EntitySet="Seller_Details" />
+            <End Role="Property_Details" EntitySet="Property_Details" />
+          </AssociationSet>
+          <EntitySet Name="Property_Images" EntityType="House_Rental_SystemModel.Property_Images" />
+          <AssociationSet Name="FK_Property_Images_Property_Details" Association="House_Rental_SystemModel.FK_Property_Images_Property_Details">
+            <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Property_Images" EntitySet="Property_Images" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Property_Details">
+          <Key>
+            <PropertyRef Name="Property_ID" />
+          </Key>
+          <Property Name="Property_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Property_Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Property_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Property_Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Property_State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Property_City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Property_Pin" Type="Int32" Nullable="false" />
+          <Property Name="Property_Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Seller_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Seller_Details" Relationship="House_Rental_SystemModel.FK_Property_Details_Seller_Details" FromRole="Property_Details" ToRole="Seller_Details" />
+          <NavigationProperty Name="Property_Images" Relationship="House_Rental_SystemModel.FK_Property_Images_Property_Details" FromRole="Property_Details" ToRole="Property_Images" />
+        </EntityType>
+        <Association Name="FK_Property_Details_Seller_Details">
+          <End Type="House_Rental_SystemModel.Seller_Details" Role="Seller_Details" Multiplicity="1" />
+          <End Type="House_Rental_SystemModel.Property_Details" Role="Property_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller_Details">
+              <PropertyRef Name="Seller_ID" />
+            </Principal>
+            <Dependent Role="Property_Details">
+              <PropertyRef Name="Seller_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Property_Images">
+          <Key>
+            <PropertyRef Name="img_id" />
+          </Key>
+          <Property Name="img_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Property_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Property_Images_Property_Details" FromRole="Property_Images" ToRole="Property_Details" />
+        </EntityType>
+        <Association Name="FK_Property_Images_Property_Details">
+          <End Type="House_Rental_SystemModel.Property_Details" Role="Property_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="House_Rental_SystemModel.Property_Images" Role="Property_Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property_Details">
+              <PropertyRef Name="Property_ID" />
+            </Principal>
+            <Dependent Role="Property_Images">
+              <PropertyRef Name="Property_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="House_Rental_SystemModelStoreContainer" CdmEntityContainer="House_Rental">
+          <EntitySetMapping Name="Customer_Details">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Customer_Details">
+              <MappingFragment StoreEntitySet="Customer_Details">
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
+                <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
+                <ScalarProperty Name="Customer_State" ColumnName="Customer_State" />
+                <ScalarProperty Name="Customer_City" ColumnName="Customer_City" />
+                <ScalarProperty Name="Customer_Profile" ColumnName="Customer_Profile" />
+                <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seller_Details">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Seller_Details">
+              <MappingFragment StoreEntitySet="Seller_Details">
+                <ScalarProperty Name="Seller_ID" ColumnName="Seller_ID" />
+                <ScalarProperty Name="Seller_Name" ColumnName="Seller_Name" />
+                <ScalarProperty Name="Seller_Email" ColumnName="Seller_Email" />
+                <ScalarProperty Name="Seller_Phone" ColumnName="Seller_Phone" />
+                <ScalarProperty Name="Seller_state" ColumnName="Seller_state" />
+                <ScalarProperty Name="Seller_Photo" ColumnName="Seller_Photo" />
+                <ScalarProperty Name="Seller_Password" ColumnName="Seller_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Property_Details">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Property_Details">
+              <MappingFragment StoreEntitySet="Property_Details">
+                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
+                <ScalarProperty Name="Property_Status" ColumnName="Property_Status" />
+                <ScalarProperty Name="Property_Pin" ColumnName="Property_Pin" />
+                <ScalarProperty Name="Property_City" ColumnName="Property_City" />
+                <ScalarProperty Name="Property_State" ColumnName="Property_State" />
+                <ScalarProperty Name="Property_Address" ColumnName="Property_Address" />
+                <ScalarProperty Name="Property_Name" ColumnName="Property_Name" />
+                <ScalarProperty Name="Property_Type" ColumnName="Property_Type" />
+                <ScalarProperty Name="Property_ID" ColumnName="Property_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Property_Images">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Property_Images">
+              <MappingFragment StoreEntitySet="Property_Images">
+                <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="img_id" ColumnName="img_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
