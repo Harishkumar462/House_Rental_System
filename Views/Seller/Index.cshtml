@@ -3,7 +3,8 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_SellerLayout.cshtml";
 }
-
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <table style="margin-top:3%; margin-left:25%">
     <tr>
         <th>Type</th>
@@ -14,7 +15,7 @@
         <th>Pin</th>
         <th>Status</th>
     </tr>
-    @foreach(var a in ViewBag.ps)
+    @foreach (var a in ViewBag.ps)
     {
 <tr>
     <td>@a.Property_Type</td>
@@ -24,8 +25,8 @@
     <td>@a.Property_City</td>
     <td>@a.Property_Pin</td>
     <td>@a.Property_Status</td>
-    <td><button class="btn"><i class="fa fa-edit"></i>@Html.ActionLink("Edit", "Edit", new { id = a.Property_ID })</button></td>
+    <td><button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Edit", "Edit", new { id = a.Property_ID })</button></td>
+    <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Delete", "DeleteProperty", new { id = a.Property_ID })</button></td>
 </tr>
     }
 </table>
-

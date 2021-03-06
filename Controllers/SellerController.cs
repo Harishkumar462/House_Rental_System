@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -30,12 +31,24 @@ namespace House_Rental_System.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddProperty(Property_Details pd)
+        public ActionResult AddProperty(Property_Details pd,HttpPostedFileBase[] images)
         {
             if (ModelState.IsValid)
             {
                 pd.Seller_Id =(int) Session["id"];
                 Db.Property_Details.Add(pd);
+                Db.SaveChanges();
+                int id = Db.Property_Details.Max(p => p.Property_ID);
+                foreach(var image in images)
+                {
+                    BinaryReader binary = new BinaryReader(image.InputStream);
+                    Property_Images pi = new Property_Images
+                    {
+                        Property_Id = id,
+                        Image = binary.ReadBytes((int)image.ContentLength)
+                    };
+                    Db.Property_Images.Add(pi);
+                }
                 Db.SaveChanges();
             }
             return RedirectToAction("Index");
@@ -113,5 +126,28 @@ namespace House_Rental_System.Controllers
             }
             return View(sd);
         }
+        public ActionResult DeleteProperty(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Property_Details pd = Db.Property_Details.Find(id);
+            if (pd == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pd);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            Property_Details pd = Db.Property_Details.Find(id);
+            Db.Property_Details.Remove(pd);
+            Db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -25,6 +25,7 @@ namespace House_Rental_System.Controllers
             if (result != null)
             {
                 Session["id"] = result.Seller_ID;
+                Session["image"] = result.Seller_Photo;
                 return RedirectToAction("Index", "Seller");
             }
             else
@@ -44,6 +45,7 @@ namespace House_Rental_System.Controllers
             if (result != null)
             {
                 Session["id"] = result.Customer_Id;
+                Session["image"] = result.Customer_Profile;
                 return RedirectToAction("Index", "Customer");
             }
             else
