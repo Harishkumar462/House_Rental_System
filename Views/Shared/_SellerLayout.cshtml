@@ -9,11 +9,6 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @{
-        byte[] image = (byte[])Session["image"];
-        var base64 = Convert.ToBase64String(image);
-        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -28,6 +23,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("AddProperty", "AddProperty", "Seller")</li>
                     <li>@Html.ActionLink("Profile", "Profile", "Seller")</li>
+                    
                 </ul>
             </div>
         </div>
