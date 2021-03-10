@@ -135,6 +135,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Booking_Details.cs">
+      <DependentUpon>Db.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Customer_Details.cs">
       <DependentUpon>Db.tt</DependentUpon>
     </Compile>
@@ -231,6 +234,7 @@
     <Content Include="Views\Customer\EditProfile.cshtml" />
     <Content Include="Views\Seller\DeleteProperty.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

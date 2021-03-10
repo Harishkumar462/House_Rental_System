@@ -1,0 +1,86 @@
+﻿@model House_Rental_System.Models.Property_Details
+
+<div>
+    <h4>Property_Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Property_Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property_Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Property_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Property_Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property_Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Property_State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property_State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Property_City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property_City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Property_Pin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property_Pin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Property_Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Property_Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Seller_Details.Seller_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seller_Details.Seller_Name)
+        </dd>
+
+    </dl>
+    @if (ViewBag.image != null)
+    {
+        foreach (var img in ViewBag.image)
+        {
+            var base64 = Convert.ToBase64String(img.Image);
+            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+            <img src="@imgsrc" style="width:100px; height:100px" />
+        }
+    }
+<td><button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "PropertyRequest", new { Pid =Model.Property_ID })</button></td>
+
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -15,6 +15,11 @@ namespace House_Rental_System.Controllers
         // GET: Customer
         public ActionResult Index()
         {
+            int id = (int)Session["id"];
+            var result=Db.Customer_Details.Where(m=>m.Customer_Id==id).FirstOrDefault();
+            var propid = Db.Booking_Details.Select(m => m.Property_Id);
+            var property = Db.Property_Details.Where(m => m.Property_City == result.Customer_City && !propid.Contains(m.Property_ID) );
+            ViewBag.Propertydetails = property;
             return View();
         }
         public ActionResult Profile()
@@ -54,6 +59,26 @@ namespace House_Rental_System.Controllers
                 return RedirectToAction("Profile");
             }
             return View(cd);
+        }
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            var result = Db.Property_Details.Where(m => m.Property_ID == id).FirstOrDefault();
+            
+            List<Property_Images> images = Db.Property_Images.Where(m => m.Property_Id == result.Property_ID).ToList<Property_Images>();
+            ViewBag.image = images;
+            return View(result);
+        }
+
+        public ActionResult PropertyRequest(int pid)
+        {
+            int cid = (int)Session["id"];
+            Booking_Details bd = new Booking_Details();
+            bd.Customer_Id = cid;
+            bd.Property_Id = pid;
+            Db.Booking_Details.Add(bd);
+            Db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

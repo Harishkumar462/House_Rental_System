@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using House_Rental_System.Models;
@@ -95,7 +96,23 @@ namespace House_Rental_System.Controllers
                 Db.SaveChanges();
 
             }
+            //SendMail();
             return RedirectToAction("Login", "Home");
+        }
+        public void SendMail()
+        {
+            MailMessage mailMessage = new MailMessage("harishkumarskv@gmail.com", "harshadhanish2211@gmail.com");
+            mailMessage.Subject = "Test";
+            mailMessage.Body = "";
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.Credentials = new System.Net.NetworkCredential()
+            {
+                UserName = "harishkumarskv@gmail.com",
+                Password = "harish462"
+            };
+            
+            smtpClient.EnableSsl= true;
+            smtpClient.Send(mailMessage);
         }
     }
 }

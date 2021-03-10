@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Windows;
@@ -39,17 +40,22 @@ namespace House_Rental_System.Controllers
                 Db.Property_Details.Add(pd);
                 Db.SaveChanges();
                 int id = Db.Property_Details.Max(p => p.Property_ID);
-                foreach(var image in images)
+                if (images != null)
                 {
-                    BinaryReader binary = new BinaryReader(image.InputStream);
-                    Property_Images pi = new Property_Images
+                    foreach (var image in images)
                     {
-                        Property_Id = id,
-                        Image = binary.ReadBytes((int)image.ContentLength)
-                    };
-                    Db.Property_Images.Add(pi);
+                        BinaryReader binary = new BinaryReader(image.InputStream);
+                        Property_Images pi = new Property_Images
+                        {
+                            Property_Id = id,
+                            Image = binary.ReadBytes((int)image.ContentLength)
+                        };
+                        Db.Property_Images.Add(pi);
+                    }
+                    Db.SaveChanges();
                 }
-                Db.SaveChanges();
+                
+               
             }
             return RedirectToAction("Index");
         }
@@ -149,5 +155,12 @@ namespace House_Rental_System.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult RequestedProperty()
+        {
+            int id = (int)Session["id"];
+            
+           
+            return View();
+        }
     }
 }
