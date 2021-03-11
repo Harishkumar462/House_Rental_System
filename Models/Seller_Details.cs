@@ -18,6 +18,7 @@ namespace House_Rental_System.Models
         public Seller_Details()
         {
             this.Property_Details = new HashSet<Property_Details>();
+            this.Booking_Details = new HashSet<Booking_Details>();
         }
     
         public int Seller_ID { get; set; }
@@ -30,5 +31,7 @@ namespace House_Rental_System.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Property_Details> Property_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Booking_Details> Booking_Details { get; set; }
     }
 }

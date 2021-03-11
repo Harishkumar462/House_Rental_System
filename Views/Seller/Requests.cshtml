@@ -1,0 +1,67 @@
+﻿@model House_Rental_System.Models.Customer_Details
+
+<div>
+    <h4>Customer_Details</h4>
+    <hr />
+    @foreach(var cd in ViewBag.cds)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                <label>Name</label>
+            </dt>
+
+            <dd>
+                <p>@cd.Customer_Name</p>
+            </dd>
+
+            <dt>
+                <label>Email</label>
+            </dt>
+
+            <dd>
+                <p>@cd.Customer_Email</p>
+            </dd>
+
+            <dt>
+                <label>Phone</label>
+            </dt>
+
+            <dd>
+                <p>@cd.Customer_Phone</p>
+            </dd>
+
+            <dt>
+                <label>State</label>
+            </dt>
+
+            <dd>
+                <p>@cd.Customer_State</p>
+            </dd>
+
+            <dt>
+                <label>City</label>
+            </dt>
+
+            <dd>
+                <p>@cd.Customer_City</p>
+            </dd>
+
+            <dt>
+                <label>Profile</label>
+            </dt>
+
+            <dd>
+               
+            </dd>
+
+
+
+        </dl>
+
+    }
+    
+</div>
+<p>
+    
+    @Html.ActionLink("Back to List", "Index")
+</p>

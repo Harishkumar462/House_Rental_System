@@ -155,11 +155,11 @@ namespace House_Rental_System.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult RequestedProperty()
+        public ActionResult Requests(int id)
         {
-            int id = (int)Session["id"];
-            
-           
+            var customers_Id = Db.Booking_Details.Where(m=>m.Property_Id==id).Select(m => m.Customer_Id);
+            List<Customer_Details> cd = Db.Customer_Details.Where(m => customers_Id.Contains(m.Customer_Id)).ToList<Customer_Details>();
+            ViewBag.cds = cd;
             return View();
         }
     }

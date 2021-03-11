@@ -17,8 +17,10 @@ namespace House_Rental_System.Models
         public int Booking_Id { get; set; }
         public int Property_Id { get; set; }
         public int Customer_Id { get; set; }
+        public int Seller_Id { get; set; }
     
         public virtual Customer_Details Customer_Details { get; set; }
         public virtual Property_Details Property_Details { get; set; }
+        public virtual Seller_Details Seller_Details { get; set; }
     }
 }

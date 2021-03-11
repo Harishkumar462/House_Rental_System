@@ -27,6 +27,7 @@
     <td>@a.Property_Status</td>
     <td><button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Edit", "Edit", new { id = a.Property_ID })</button></td>
     <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Delete", "DeleteProperty", new { id = a.Property_ID })</button></td>
+    <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "Requests", new { id = a.Property_ID })</button></td>
 </tr>
     }
 </table>

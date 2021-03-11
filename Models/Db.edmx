@@ -12,6 +12,7 @@
           <Property Name="Booking_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Property_Id" Type="int" Nullable="false" />
           <Property Name="Customer_Id" Type="int" Nullable="false" />
+          <Property Name="Seller_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer_Details">
           <Key>
@@ -86,6 +87,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Booking_Details_Seller_Details">
+          <End Role="Seller_Details" Type="Self.Seller_Details" Multiplicity="1" />
+          <End Role="Booking_Details" Type="Self.Booking_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller_Details">
+              <PropertyRef Name="Seller_ID" />
+            </Principal>
+            <Dependent Role="Booking_Details">
+              <PropertyRef Name="Seller_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Property_Details_Seller_Details">
           <End Role="Seller_Details" Type="Self.Seller_Details" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -128,6 +141,10 @@
             <End Role="Property_Details" EntitySet="Property_Details" />
             <End Role="Booking_Details" EntitySet="Booking_Details" />
           </AssociationSet>
+          <AssociationSet Name="FK_Booking_Details_Seller_Details" Association="Self.FK_Booking_Details_Seller_Details">
+            <End Role="Seller_Details" EntitySet="Seller_Details" />
+            <End Role="Booking_Details" EntitySet="Booking_Details" />
+          </AssociationSet>
           <AssociationSet Name="FK_Property_Details_Seller_Details" Association="Self.FK_Property_Details_Seller_Details">
             <End Role="Seller_Details" EntitySet="Seller_Details" />
             <End Role="Property_Details" EntitySet="Property_Details" />
@@ -167,6 +184,7 @@
           <Property Name="Seller_Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Seller_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Property_Details_Seller_Details" FromRole="Seller_Details" ToRole="Property_Details" />
+          <NavigationProperty Name="Booking_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Seller_Details" FromRole="Seller_Details" ToRole="Booking_Details" />
         </EntityType>
         <EntityContainer Name="House_Rental" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" />
@@ -188,6 +206,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Booking_Details_Property_Details" Association="House_Rental_SystemModel.FK_Booking_Details_Property_Details">
             <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Booking_Details" EntitySet="Booking_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_Details_Seller_Details" Association="House_Rental_SystemModel.FK_Booking_Details_Seller_Details">
+            <End Role="Seller_Details" EntitySet="Seller_Details" />
             <End Role="Booking_Details" EntitySet="Booking_Details" />
           </AssociationSet>
         </EntityContainer>
@@ -252,6 +274,8 @@
           <Property Name="Customer_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Customer_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Customer_Details" FromRole="Booking_Details" ToRole="Customer_Details" />
           <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Property_Details" FromRole="Booking_Details" ToRole="Property_Details" />
+          <Property Name="Seller_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Seller_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Seller_Details" FromRole="Booking_Details" ToRole="Seller_Details" />
         </EntityType>
         <Association Name="FK_Booking_Details_Customer_Details">
           <End Type="House_Rental_SystemModel.Customer_Details" Role="Customer_Details" Multiplicity="1" />
@@ -276,6 +300,18 @@
             </Principal>
             <Dependent Role="Booking_Details">
               <PropertyRef Name="Property_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_Details_Seller_Details">
+          <End Type="House_Rental_SystemModel.Seller_Details" Role="Seller_Details" Multiplicity="1" />
+          <End Type="House_Rental_SystemModel.Booking_Details" Role="Booking_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller_Details">
+              <PropertyRef Name="Seller_ID" />
+            </Principal>
+            <Dependent Role="Booking_Details">
+              <PropertyRef Name="Seller_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -339,6 +375,7 @@
           <EntitySetMapping Name="Booking_Details">
             <EntityTypeMapping TypeName="House_Rental_SystemModel.Booking_Details">
               <MappingFragment StoreEntitySet="Booking_Details">
+                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
                 <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
                 <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
                 <ScalarProperty Name="Booking_Id" ColumnName="Booking_Id" />
