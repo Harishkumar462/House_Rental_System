@@ -1,67 +1,102 @@
 ﻿@model House_Rental_System.Models.Customer_Details
 
+@{Layout = "~/Views/Shared/_SellerLayout.cshtml";}
+<style>
+
+    .details {
+        display:flex;
+        justify-content:flex-start;
+    }
+        .details > p:nth-child(odd) {
+           width:20%;
+           margin-left:30%;
+        }
+    .details > p:nth-child(even){
+        margin-left:3rem;
+        font-weight:bold;
+
+    }
+       </style>
 <div>
     <h4>Customer_Details</h4>
     <hr />
-    @foreach(var cd in ViewBag.cds)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                <label>Name</label>
-            </dt>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Details</th>
+            <th colspan="2">Action</th>
+        </tr>
 
-            <dd>
-                <p>@cd.Customer_Name</p>
-            </dd>
+        @foreach (var cd in ViewBag.cds)
+        {
+            <tr>
+                <td>@cd.Customer_Name</td>
+                <td>@cd.Customer_Email</td>
+                <td>@cd.Customer_Phone</td>
+                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit" style="color:cornflowerblue"></i>Details</button></td>
+                <td>
+                    <div class="modal fade" tabindex="-1" id="exampleModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="detaillabel">Detials</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span>X</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group ">
+                                            <center>
+                                                @{
+                                                    if (cd.Customer_Profile != null)
+                                                    {
+                                                        var base64 = Convert.ToBase64String((byte[])cd.Customer_Profile);
+                                                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                        <img src='@imgsrc' style="height:100px;width:100px;border:1px solid black;border-radius:50%" />
+                                                    }
 
-            <dt>
-                <label>Email</label>
-            </dt>
+                                                }
+                                            </center>
 
-            <dd>
-                <p>@cd.Customer_Email</p>
-            </dd>
+                                        </div>
+                                        <div class="form-group details">
+                                            <p>Name</p>
+                                            <p>@cd.Customer_Name</p>
+                                        </div>
+                                        <div class="form-group details">
+                                            <p>Email</p>
+                                            <p>@cd.Customer_Email</p>
+                                        </div>
+                                        <div class="form-group details">
+                                            <p>City</p>
+                                            <p>@cd.Customer_City</p>
+                                        </div>
+                                        <div class="form-group details">
+                                            <p>Phone</p>
+                                            <p>@cd.Customer_Phone</p>
+                                        </div>
+                                        <div class="form-group details">
+                                            <p>State</p>
+                                            <p>@cd.Customer_State</p>
+                                        </div>
 
-            <dt>
-                <label>Phone</label>
-            </dt>
-
-            <dd>
-                <p>@cd.Customer_Phone</p>
-            </dd>
-
-            <dt>
-                <label>State</label>
-            </dt>
-
-            <dd>
-                <p>@cd.Customer_State</p>
-            </dd>
-
-            <dt>
-                <label>City</label>
-            </dt>
-
-            <dd>
-                <p>@cd.Customer_City</p>
-            </dd>
-
-            <dt>
-                <label>Profile</label>
-            </dt>
-
-            <dd>
-               
-            </dd>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                
+            </tr>
+         }
+    </table>
 
 
 
-        </dl>
 
-    }
-    
-</div>
-<p>
-    
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <p>
+
+            @Html.ActionLink("Back to List", "Index")
+        </p>

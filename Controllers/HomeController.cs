@@ -99,6 +99,11 @@ namespace House_Rental_System.Controllers
             //SendMail();
             return RedirectToAction("Login", "Home");
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
         public void SendMail()
         {
             MailMessage mailMessage = new MailMessage("harishkumarskv@gmail.com", "harshadhanish2211@gmail.com");

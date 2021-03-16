@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Property";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<style>
+
+    .details {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+        .details > p:nth-child(odd) {
+            width: 20%;
+            margin-left: 30%;
+        }
+
+        .details > p:nth-child(even) {
+            margin-left: 3rem;
+            font-weight: bold;
+        }
+</style>
+
+<table style="margin-top:3%; margin-left:25%">
+    <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Address</th>    
+    </tr>
+    @foreach (var a in ViewBag.Property_Details)
+    {
+<tr>
+    <td>@a.Property_Type</td>
+    <td>@a.Property_Name</td>
+    <td>@a.Property_Address</td>
+    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit" style="color:cornflowerblue"></i>Details</button></td>
+    <td>
+        <div class="modal fade" tabindex="-1" id="exampleModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="detaillabel">Detials</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span>X</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+
+                            <div class="form-group details">
+                                <p>Type</p>
+                                <p>@a.Property_Type</p>
+                            </div>
+                            <div class="form-group details">
+                                <p>Name</p>
+                                <p>@a.Property_Name</p>
+                            </div>
+                            <div class="form-group details">
+                                <p>Address</p>
+                                <p>@a.Property_Address</p>
+                            </div>
+                            <div class="form-group details">
+                                <p>State</p>
+                                <p>@a.Property_State</p>
+                            </div>
+                            <div class="form-group details">
+                                <p>City</p>
+                                <p>@a.Property_City</p>
+                            </div>
+                            <div class="form-group details">
+                                <p>Pin</p>
+                                <p>@a.Property_Pin</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+    }
+</table>

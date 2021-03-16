@@ -236,6 +236,8 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Seller\Requests.cshtml" />
+    <Content Include="Views\Shared\_CustomerLayout.cshtml" />
+    <Content Include="Views\Customer\Property.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

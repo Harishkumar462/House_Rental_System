@@ -81,5 +81,13 @@ namespace House_Rental_System.Controllers
             Db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult Property()
+        {
+            int id =(int) Session["id"];
+            var propertyids = Db.Booking_Details.Where(m => m.Customer_Id == id).Select(m => m.Property_Id);
+            List<Property_Details> pd = Db.Property_Details.Where(m => propertyids.Contains(m.Property_ID)).ToList<Property_Details>();
+            ViewBag.Property_Details = pd;
+            return View();
+        }
     }
 }
