@@ -30,5 +30,6 @@ namespace House_Rental_System.Models
         public virtual DbSet<Property_Details> Property_Details { get; set; }
         public virtual DbSet<Property_Images> Property_Images { get; set; }
         public virtual DbSet<Booking_Details> Booking_Details { get; set; }
+        public virtual DbSet<Sold_Property> Sold_Property { get; set; }
     }
 }

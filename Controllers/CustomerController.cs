@@ -89,5 +89,13 @@ namespace House_Rental_System.Controllers
             ViewBag.Property_Details = pd;
             return View();
         }
+        public ActionResult DeleteRequest(int pid)
+        {
+            int cid = (int)Session["id"];
+            Booking_Details bd = Db.Booking_Details.Where(m => m.Customer_Id == cid && m.Property_Id == pid).FirstOrDefault();
+            Db.Booking_Details.Remove(bd);
+            Db.SaveChanges();
+            return RedirectToAction("Property");
+        }
     }
 }

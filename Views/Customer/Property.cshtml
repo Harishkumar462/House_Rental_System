@@ -25,7 +25,8 @@
     <tr>
         <th>Type</th>
         <th>Name</th>
-        <th>Address</th>    
+        <th>Address</th>  
+        <th>Action</th>
     </tr>
     @foreach (var a in ViewBag.Property_Details)
     {
@@ -75,6 +76,9 @@
             </div>
         </div>
     </td>
+    <td>
+    <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Delete", "DeleteRequest", new { pid = a.Property_ID, })</button></td>
+    
 </tr>
     }
 </table>

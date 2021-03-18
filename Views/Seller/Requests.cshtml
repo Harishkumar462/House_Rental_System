@@ -31,65 +31,67 @@
 
         @foreach (var cd in ViewBag.cds)
         {
-            <tr>
-                <td>@cd.Customer_Name</td>
-                <td>@cd.Customer_Email</td>
-                <td>@cd.Customer_Phone</td>
-                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit" style="color:cornflowerblue"></i>Details</button></td>
-                <td>
-                    <div class="modal fade" tabindex="-1" id="exampleModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="detaillabel">Detials</h4>
-                                    <button type="button" class="close" data-dismiss="modal"><span>X</span></button>
+    <tr>
+        <td>@cd.Customer_Name</td>
+        <td>@cd.Customer_Email</td>
+        <td>@cd.Customer_Phone</td>
+        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit" style="color:cornflowerblue"></i>Details</button></td>
+        <td>
+            <div class="modal fade" tabindex="-1" id="exampleModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="detaillabel">Detials</h4>
+                            <button type="button" class="close" data-dismiss="modal"><span>X</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group ">
+                                    <center>
+                                        @{
+                                            if (cd.Customer_Profile != null)
+                                            {
+                                                var base64 = Convert.ToBase64String((byte[])cd.Customer_Profile);
+                                                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                <img src='@imgsrc' style="height:100px;width:100px;border:1px solid black;border-radius:50%" />
+                                            }
+
+                                        }
+                                    </center>
+
                                 </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group ">
-                                            <center>
-                                                @{
-                                                    if (cd.Customer_Profile != null)
-                                                    {
-                                                        var base64 = Convert.ToBase64String((byte[])cd.Customer_Profile);
-                                                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                                        <img src='@imgsrc' style="height:100px;width:100px;border:1px solid black;border-radius:50%" />
-                                                    }
-
-                                                }
-                                            </center>
-
-                                        </div>
-                                        <div class="form-group details">
-                                            <p>Name</p>
-                                            <p>@cd.Customer_Name</p>
-                                        </div>
-                                        <div class="form-group details">
-                                            <p>Email</p>
-                                            <p>@cd.Customer_Email</p>
-                                        </div>
-                                        <div class="form-group details">
-                                            <p>City</p>
-                                            <p>@cd.Customer_City</p>
-                                        </div>
-                                        <div class="form-group details">
-                                            <p>Phone</p>
-                                            <p>@cd.Customer_Phone</p>
-                                        </div>
-                                        <div class="form-group details">
-                                            <p>State</p>
-                                            <p>@cd.Customer_State</p>
-                                        </div>
-
-                                    </form>
+                                <div class="form-group details">
+                                    <p>Name</p>
+                                    <p>@cd.Customer_Name</p>
                                 </div>
-                            </div>
+                                <div class="form-group details">
+                                    <p>Email</p>
+                                    <p>@cd.Customer_Email</p>
+                                </div>
+                                <div class="form-group details">
+                                    <p>City</p>
+                                    <p>@cd.Customer_City</p>
+                                </div>
+                                <div class="form-group details">
+                                    <p>Phone</p>
+                                    <p>@cd.Customer_Phone</p>
+                                </div>
+                                <div class="form-group details">
+                                    <p>State</p>
+                                    <p>@cd.Customer_State</p>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
-                </td>
-                <td>
-                
-            </tr>
+                </div>
+            </div>
+        </td>
+        <td>
+        <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Approve", "Confirmation",new {cid=cd.Customer_Id})</button></td>
+        
+
+    </tr>
          }
     </table>
 

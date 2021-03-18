@@ -15,6 +15,10 @@
         <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Customer_Details" />
         <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Property_Details" />
         <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Seller_Details" />
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Sold_Property" Width="1.5" PointX="9.625" PointY="0.75" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Customer_Details" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Property_Details" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Seller_Details" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

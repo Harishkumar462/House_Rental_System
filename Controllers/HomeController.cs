@@ -104,9 +104,9 @@ namespace House_Rental_System.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
-        public void SendMail()
+        public void SendMail(string emailid)
         {
-            MailMessage mailMessage = new MailMessage("harishkumarskv@gmail.com", "harshadhanish2211@gmail.com");
+            MailMessage mailMessage = new MailMessage("harishkumarskv@gmail.com", emailid);
             mailMessage.Subject = "Test";
             mailMessage.Body = "";
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);

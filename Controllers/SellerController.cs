@@ -157,10 +157,60 @@ namespace House_Rental_System.Controllers
 
         public ActionResult Requests(int id)
         {
+            Session["propertyid"] = id;
             var customers_Id = Db.Booking_Details.Where(m=>m.Property_Id==id).Select(m => m.Customer_Id);
             List<Customer_Details> cd = Db.Customer_Details.Where(m => customers_Id.Contains(m.Customer_Id)).ToList<Customer_Details>();
             ViewBag.cds = cd;
             return View();
+        }
+        public ActionResult Confirmation(int cid)
+        {
+            Session["customerid"] = cid;
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult Confirmation(Sold_Property sp)
+        {
+            sp.Customer_Id = (int)Session["customerid"];
+            sp.Property_Id = (int)Session["propertyid"];
+            sp.Seller_Id = (int)Session["id"];
+            sp.Date_of_Sale = DateTime.Now.Year.ToString();
+            Db.Sold_Property.Add(sp);
+            Db.SaveChanges();
+            int pid = (int)Session["propertyid"];
+            int cid = (int)Session["customerid"];
+            List<Booking_Details> result = Db.Booking_Details.Where(m => m.Property_Id ==pid  && m.Customer_Id!=cid ).ToList<Booking_Details>();
+
+            foreach (Booking_Details x in result)
+            {
+                string email = Db.Customer_Details.Where(m => m.Customer_Id == x.Customer_Id).Select(m => m.Customer_Email).FirstOrDefault();
+                string propertyname = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Name).FirstOrDefault();
+                string propertyaddress = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Address).FirstOrDefault();
+                SendMail(email, propertyname, propertyaddress);
+                Db.Booking_Details.Remove(x);
+            }
+            Session.Remove("propertyid");
+            Session.Remove("customerid");
+            return RedirectToAction("Index");
+        }
+        public void SendMail(string emailid,string propertyname,string propertyaddress)
+        {
+            MailMessage mailMessage = new MailMessage("harishsnape1999@gmail.com", emailid);
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Subject = "House Rental";
+            string link = "https://localhost:44376/Home/Index";
+            mailMessage.Body = "<html><body><h1> The House/Flat " + propertyname+" "+ propertyaddress +
+                "</h1><p>This property was sold </p><p>Please search some other property</p><a href="+link+">Click Here</a></body></html>";
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.Credentials = new System.Net.NetworkCredential()
+            {
+                UserName = "harishsnape1999@gmail.com",
+                Password = "harish462"
+            };
+
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(mailMessage);
         }
     }
 }
