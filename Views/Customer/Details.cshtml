@@ -76,11 +76,10 @@
                 <img src="@imgsrc" style="width:100px; height:100px" />
             }
         }
-        <td><button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "PropertyRequest", new { Pid = Model.Property_ID,Sid=Model.Seller_Id })</button></td>
+        <button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "PropertyRequest", new { Pid = Model.Property_ID,Sid=Model.Seller_Id })</button>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Property_ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

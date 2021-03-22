@@ -1,33 +1,84 @@
-﻿
+﻿@model IEnumerable<House_Rental_System.Models.Property_Details>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_SellerLayout.cshtml";
 }
-<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<table style="margin-top:3%; margin-left:25%">
+
+
+<table class="table">
     <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>State</th>
-        <th>City</th>
-        <th>Pin</th>
-        <th>Status</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Property_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Property_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Property_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Property_State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Property_City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Property_Pin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Property_Status)
+        </th>
+
+        <th></th>
     </tr>
-    @foreach (var a in ViewBag.ps)
-    {
-<tr>
-    <td>@a.Property_Type</td>
-    <td>@a.Property_Name</td>
-    <td>@a.Property_Address</td>
-    <td>@a.Property_State</td>
-    <td>@a.Property_City</td>
-    <td>@a.Property_Pin</td>
-    <td>@a.Property_Status</td>
-    <td><button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Edit", "Edit", new { id = a.Property_ID })</button></td>
-    <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Delete", "DeleteProperty", new { id = a.Property_ID })</button></td>
-    <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "Requests", new { id = a.Property_ID })</button></td>
-</tr>
+    @{
+        int i = 0;
+        int[] property_count = ViewBag.pc;
     }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Pin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Status)
+            </td>
+           
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Property_ID }) |
+                @{
+                    if (property_count[i] == 1)
+                    {
+                    <button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "Requests", new { id = item.Property_ID })</button>
+                    }
+                    else
+                    {
+
+                        <button class="btn" disabled><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>Request</button>
+                    }
+                    i += 1;
+                } |
+                @Html.ActionLink("Delete", "DeleteProperty", new { id = item.Property_ID })
+            </td>
+        </tr>
+     }
+
 </table>
+

@@ -20,8 +20,24 @@ namespace House_Rental_System.Controllers
         {
             int id = (int)Session["id"];
             List<Property_Details> pd = Db.Property_Details.Where(m => m.Seller_Id==id).ToList<Property_Details>();
-            ViewBag.ps = pd;
-            return View();
+            int i = 0;
+            int[] property_count = new int[pd.Count];
+            foreach(var x in pd)
+            {
+                var result = Db.Booking_Details.Where(m => m.Property_Id == x.Property_ID).Count();
+                if (result == 0)
+                {
+                    property_count[i] = 0;
+                }
+                else
+                {
+                    property_count[i] = 1;
+                }
+                i += 1;
+            }
+            ViewBag.pc = property_count;
+            
+            return View(pd);
         }
         public ActionResult AddProperty()
         {
@@ -175,33 +191,74 @@ namespace House_Rental_System.Controllers
             sp.Customer_Id = (int)Session["customerid"];
             sp.Property_Id = (int)Session["propertyid"];
             sp.Seller_Id = (int)Session["id"];
-            sp.Date_of_Sale = DateTime.Now.Year.ToString();
+            sp.Date_of_Sale = DateTime.Now.ToString();
             Db.Sold_Property.Add(sp);
             Db.SaveChanges();
             int pid = (int)Session["propertyid"];
             int cid = (int)Session["customerid"];
+            string cemail = Db.Customer_Details.Where(m => m.Customer_Id == cid).Select(m=>m.Customer_Email).FirstOrDefault();
+            var customer = Db.Booking_Details.Where(m=>m.Customer_Id==cid&& m.Property_Id==pid).FirstOrDefault();
+            string pname = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Name).FirstOrDefault();
+            string paddress = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Address).FirstOrDefault();
+            ConfirmationMail(cemail, pname,paddress);
+            Db.Booking_Details.Remove(customer);
+            Db.SaveChanges();
             List<Booking_Details> result = Db.Booking_Details.Where(m => m.Property_Id ==pid  && m.Customer_Id!=cid ).ToList<Booking_Details>();
-
-            foreach (Booking_Details x in result)
+            Property_Details bd = Db.Property_Details.Where(m => m.Property_ID == pid).FirstOrDefault();
+            bd.Property_Status = "Not Available";
+            Db.SaveChanges();
+            if (result != null)
             {
-                string email = Db.Customer_Details.Where(m => m.Customer_Id == x.Customer_Id).Select(m => m.Customer_Email).FirstOrDefault();
-                string propertyname = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Name).FirstOrDefault();
-                string propertyaddress = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Address).FirstOrDefault();
-                SendMail(email, propertyname, propertyaddress);
-                Db.Booking_Details.Remove(x);
+                foreach (Booking_Details x in result)
+                {
+                    string email = Db.Customer_Details.Where(m => m.Customer_Id == x.Customer_Id).Select(m => m.Customer_Email).FirstOrDefault();
+                    string propertyname = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Name).FirstOrDefault();
+                    string propertyaddress = Db.Property_Details.Where(m => m.Property_ID == pid).Select(m => m.Property_Address).FirstOrDefault();
+                    RejectionMail(email, propertyname, propertyaddress);
+                    Db.Booking_Details.Remove(x);
+                    Db.SaveChanges();
+                }
             }
+            
             Session.Remove("propertyid");
             Session.Remove("customerid");
             return RedirectToAction("Index");
         }
-        public void SendMail(string emailid,string propertyname,string propertyaddress)
+
+        public ActionResult SoldProperty()
+        {
+            int id = (int)Session["id"];
+            List<Sold_Property> sold_Property = Db.Sold_Property.Where(m => m.Seller_Id == id).ToList<Sold_Property>();
+            return View(sold_Property);
+            
+        }
+
+        public void RejectionMail(string emailid,string propertyname,string propertyaddress)
         {
             MailMessage mailMessage = new MailMessage("harishsnape1999@gmail.com", emailid);
             mailMessage.IsBodyHtml = true;
             mailMessage.Subject = "House Rental";
             string link = "https://localhost:44376/Home/Index";
             mailMessage.Body = "<html><body><h1> The House/Flat " + propertyname+" "+ propertyaddress +
-                "</h1><p>This property was sold </p><p>Please search some other property</p><a href="+link+">Click Here</a></body></html>";
+                "</h1><p>This property was Rented </p><p>Please search some other property</p><a href="+link+">Click Here</a></body></html>";
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.Credentials = new System.Net.NetworkCredential()
+            {
+                UserName = "harishsnape1999@gmail.com",
+                Password = "harish462"
+            };
+
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(mailMessage);
+        }
+        public void ConfirmationMail(string emailid, string propertyname, string propertyaddress)
+        {
+            MailMessage mailMessage = new MailMessage("harishsnape1999@gmail.com", emailid);
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Subject = "House Rental";
+            string link = "https://localhost:44376/Home/Index";
+            mailMessage.Body = "<html><body><h1> The House/Flat " + propertyname + " " + propertyaddress +
+                "</h1><p>This property was Rented to You </p><a href=" + link + ">Click Here</a></body></html>";
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
             smtpClient.Credentials = new System.Net.NetworkCredential()
             {

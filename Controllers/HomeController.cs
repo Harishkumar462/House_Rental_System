@@ -90,11 +90,11 @@ namespace House_Rental_System.Controllers
                 image.InputStream.Read(cd.Customer_Profile, 0, image.ContentLength);
             }
             if (ModelState.IsValid)
-            {
-
-                Db.Customer_Details.Add(cd);
-                Db.SaveChanges();
-
+            { 
+ 
+                    Db.Customer_Details.Add(cd);
+                    Db.SaveChanges();
+                
             }
             //SendMail();
             return RedirectToAction("Login", "Home");

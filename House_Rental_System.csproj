@@ -242,6 +242,8 @@
     <Content Include="Views\Shared\_CustomerLayout.cshtml" />
     <Content Include="Views\Customer\Property.cshtml" />
     <Content Include="Views\Seller\Confirmation.cshtml" />
+    <Content Include="Views\Seller\SoldProperty.cshtml" />
+    <Content Include="Views\Customer\RentedProperties.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

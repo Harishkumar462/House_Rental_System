@@ -56,11 +56,14 @@
         </dt>
 
         <dd>
-            @{
-                var base64 = Convert.ToBase64String(ViewBag.image);
-                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-            }
-            <img src='@imgsrc' style="height:100px;width:100px;" />
+            @{if (ViewBag.image != null)
+                {
+                    var base64 = Convert.ToBase64String(ViewBag.image);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <img src='@imgsrc' style="height:100px;width:100px;" />
+                    }
+                }
+
         </dd>
 
         <dt>

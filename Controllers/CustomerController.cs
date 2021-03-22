@@ -18,9 +18,8 @@ namespace House_Rental_System.Controllers
             int id = (int)Session["id"];
             var result=Db.Customer_Details.Where(m=>m.Customer_Id==id).FirstOrDefault();
             var propid = Db.Booking_Details.Where(m=>m.Customer_Id==id).Select(m => m.Property_Id);
-            var property = Db.Property_Details.Where(m => m.Property_City == result.Customer_City && !propid.Contains(m.Property_ID) );
-            ViewBag.Propertydetails = property;
-            return View();
+            List<Property_Details> property = Db.Property_Details.Where(m => m.Property_City == result.Customer_City && !propid.Contains(m.Property_ID) &&m.Property_Status=="Available").ToList<Property_Details>();
+            return View(property);
         }
         public ActionResult Profile()
         {
@@ -86,16 +85,21 @@ namespace House_Rental_System.Controllers
             int id =(int) Session["id"];
             var propertyids = Db.Booking_Details.Where(m => m.Customer_Id == id).Select(m => m.Property_Id);
             List<Property_Details> pd = Db.Property_Details.Where(m => propertyids.Contains(m.Property_ID)).ToList<Property_Details>();
-            ViewBag.Property_Details = pd;
-            return View();
+            return View(pd);
         }
-        public ActionResult DeleteRequest(int pid)
+        public ActionResult DeleteRequest(int id)
         {
             int cid = (int)Session["id"];
-            Booking_Details bd = Db.Booking_Details.Where(m => m.Customer_Id == cid && m.Property_Id == pid).FirstOrDefault();
+            Booking_Details bd = Db.Booking_Details.Where(m => m.Customer_Id == cid && m.Property_Id == id).FirstOrDefault();
             Db.Booking_Details.Remove(bd);
             Db.SaveChanges();
             return RedirectToAction("Property");
+        }
+        public ActionResult RentedProperties()
+        {
+            int id = (int)Session["id"];
+            List<Sold_Property> sp = Db.Sold_Property.Where(m => m.Customer_Id == id).ToList<Sold_Property>();
+            return View(sp);
         }
     }
 }
