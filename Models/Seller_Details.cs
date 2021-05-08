@@ -17,8 +17,8 @@ namespace House_Rental_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Seller_Details()
         {
-            this.Property_Details = new HashSet<Property_Details>();
             this.Booking_Details = new HashSet<Booking_Details>();
+            this.Property_Details = new HashSet<Property_Details>();
             this.Sold_Property = new HashSet<Sold_Property>();
         }
     
@@ -31,9 +31,9 @@ namespace House_Rental_System.Models
         public string Seller_Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Property_Details> Property_Details { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking_Details> Booking_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Property_Details> Property_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sold_Property> Sold_Property { get; set; }
     }

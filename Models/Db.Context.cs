@@ -25,11 +25,12 @@ namespace House_Rental_System.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Booking_Details> Booking_Details { get; set; }
         public virtual DbSet<Customer_Details> Customer_Details { get; set; }
-        public virtual DbSet<Seller_Details> Seller_Details { get; set; }
         public virtual DbSet<Property_Details> Property_Details { get; set; }
         public virtual DbSet<Property_Images> Property_Images { get; set; }
-        public virtual DbSet<Booking_Details> Booking_Details { get; set; }
+        public virtual DbSet<Property_Information> Property_Information { get; set; }
+        public virtual DbSet<Seller_Details> Seller_Details { get; set; }
         public virtual DbSet<Sold_Property> Sold_Property { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace House_Rental_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Property_Details()
         {
-            this.Property_Images = new HashSet<Property_Images>();
             this.Booking_Details = new HashSet<Booking_Details>();
+            this.Property_Images = new List<Property_Images>();
             this.Sold_Property = new HashSet<Sold_Property>();
         }
     
@@ -32,11 +32,12 @@ namespace House_Rental_System.Models
         public string Property_Status { get; set; }
         public int Seller_Id { get; set; }
     
-        public virtual Seller_Details Seller_Details { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Property_Images> Property_Images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking_Details> Booking_Details { get; set; }
+        public virtual Seller_Details Seller_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual IList<Property_Images> Property_Images { get; set; }
+        public virtual Property_Information Property_Information { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sold_Property> Sold_Property { get; set; }
     }

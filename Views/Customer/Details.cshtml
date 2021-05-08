@@ -1,5 +1,11 @@
 ﻿@model House_Rental_System.Models.Property_Details
-
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <div>
     <h4>Property_Details</h4>
     <hr />
@@ -67,16 +73,28 @@
         <dd>
             @Html.DisplayFor(model => model.Seller_Details.Seller_Name)
         </dd>
-        @if (ViewBag.image != null)
-        {
-            foreach (var img in ViewBag.image)
+        @{
+            var imgs = Model.Property_Images;
+            if (imgs.Count > 0)
             {
-                var base64 = Convert.ToBase64String(img.Image);
-                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                <img src="@imgsrc" style="width:100px; height:100px" />
+                foreach (var image in imgs)
+                {
+
+                    var base64 = Convert.ToBase64String(image.Image);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="@imgsrc">
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
             }
         }
-        <button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "PropertyRequest", new { Pid = Model.Property_ID,Sid=Model.Seller_Id })</button>
+        <button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "PropertyRequest", new { Pid = Model.Property_ID, Sid = Model.Seller_Id })</button>
 
     </dl>
 </div>

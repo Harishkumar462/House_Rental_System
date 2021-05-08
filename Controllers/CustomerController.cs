@@ -50,6 +50,15 @@ namespace House_Rental_System.Controllers
                 cd.Customer_Profile = new byte[image.ContentLength];
                 image.InputStream.Read(cd.Customer_Profile, 0, image.ContentLength);
             }
+            else
+            {
+                int id = (int)Session["id"];
+                var img = Db.Customer_Details.Where(m => m.Customer_Id == id).Select(m => m.Customer_Profile).FirstOrDefault();
+                if (img != null)
+                {
+                    cd.Customer_Profile =img;
+                }
+            }
             if (ModelState.IsValid)
             {
                 cd.Customer_Id = (int)Session["id"];
@@ -63,19 +72,18 @@ namespace House_Rental_System.Controllers
         public ActionResult Details(int? id)
         {
             var result = Db.Property_Details.Where(m => m.Property_ID == id).FirstOrDefault();
-            
-            List<Property_Images> images = Db.Property_Images.Where(m => m.Property_Id == result.Property_ID).ToList<Property_Images>();
-            ViewBag.image = images;
             return View(result);
         }
 
         public ActionResult PropertyRequest(int pid,int Sid)
         {
             int cid = (int)Session["id"];
-            Booking_Details bd = new Booking_Details();
-            bd.Customer_Id = cid;
-            bd.Property_Id = pid;
-            bd.Seller_Id = Sid;
+            Booking_Details bd = new Booking_Details
+            {
+                Customer_Id = cid,
+                Property_Id = pid,
+                Seller_Id = Sid
+            };
             Db.Booking_Details.Add(bd);
             Db.SaveChanges();
             return RedirectToAction("Index");
@@ -100,6 +108,11 @@ namespace House_Rental_System.Controllers
             int id = (int)Session["id"];
             List<Sold_Property> sp = Db.Sold_Property.Where(m => m.Customer_Id == id).ToList<Sold_Property>();
             return View(sp);
+        }
+        public ActionResult Search(string search)
+        {
+            List<Property_Details> property = Db.Property_Details.Where(m => m.Property_City == search && m.Property_Status == "Available").ToList<Property_Details>();
+            return View(property);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Windows;
@@ -39,49 +40,64 @@ namespace House_Rental_System.Controllers
             
             return View(pd);
         }
-        public ActionResult AddProperty()
+        public ActionResult Indexs()
         {
-            List<string> type = new List<string>() {"House","Flat"};
-            List<string> status = new List<string>() { "Available", "UnAvailable" };
-            ViewBag.types = type;
-            ViewBag.Status = status;
+            int id = (int)Session["id"];
+            List<Property_Details> pd = Db.Property_Details.Where(m => m.Seller_Id == id).ToList<Property_Details>();
+            return View(pd);
+        }
+        public ActionResult AddProperty()
+        { 
             return View();
         }
         [HttpPost]
-        public ActionResult AddProperty(Property_Details pd,HttpPostedFileBase[] images)
+        public async Task<ActionResult>    AddProperty(Property_Details pd,HttpPostedFileBase[] images,string Status, string Parking, string Tenants, string Furnishing, string Facing, string BHK, string Type)
         {
             if (ModelState.IsValid)
             {
                 pd.Seller_Id =(int) Session["id"];
+                pd.Property_Status = Status;
+                pd.Property_Type = Type;
+                pd.Property_Information.BHK = BHK;
+                pd.Property_Information.Facing = Facing;
+                pd.Property_Information.Furnishing = Furnishing;
+                pd.Property_Information.Parking = Parking;
+                pd.Property_Information.Preferred_Tenants = Tenants;
                 Db.Property_Details.Add(pd);
-                Db.SaveChanges();
+                await Db.SaveChangesAsync();
+   
                 int id = Db.Property_Details.Max(p => p.Property_ID);
-                if (images != null)
+                if (images.Length>0)
                 {
                     foreach (var image in images)
                     {
-                        BinaryReader binary = new BinaryReader(image.InputStream);
-                        Property_Images pi = new Property_Images
+                        if (image != null)
                         {
-                            Property_Id = id,
-                            Image = binary.ReadBytes((int)image.ContentLength)
-                        };
-                        Db.Property_Images.Add(pi);
+                            BinaryReader binary = new BinaryReader(image.InputStream);
+                            Property_Images pi = new Property_Images
+                            {
+                                Property_Id = id,
+                                Image = binary.ReadBytes((int)image.ContentLength)
+                            };
+                            Db.Property_Images.Add(pi);
+                        }
+                        
                     }
                     Db.SaveChanges();
                 }
                 
                
             }
+            else
+            {
+                return View(pd);
+            }
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int? id)
         {
-            List<string> type = new List<string>() { "House", "Flat" };
-            List<string> status = new List<string>() { "Available", "UnAvailable" };
-            ViewBag.types = type;
-            ViewBag.Status = status;
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -91,20 +107,53 @@ namespace House_Rental_System.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Seller_Id = new SelectList(Db.Seller_Details, "Seller_ID", "Seller_Name", property_Details.Seller_Id);
             return View(property_Details);
         }
 
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Property_ID,Property_Type,Property_Name,Property_Address,Property_State,Property_City,Property_Pin,Property_Status,Seller_Id")] Property_Details property_Details)
+        public ActionResult Edit( Property_Details property_Details, string Status, string Parking, string Tenants, string Furnishing, string Facing, string BHK, string Type)
         {
+            
             if (ModelState.IsValid)
             {
+                try { 
+                System.Diagnostics.Debug.WriteLine(property_Details.Property_Information.Total_Floor);
                 property_Details.Seller_Id = (int)Session["id"];
-                Db.Entry(property_Details).State = EntityState.Modified;
+
+                Property_Details pd = Db.Property_Details.First(m => m.Property_ID == property_Details.Property_ID);
+                pd.Property_Status = Status;
+                pd.Property_Type = Type;
+                pd.Property_Address = property_Details.Property_Address;
+                pd.Property_City = property_Details.Property_City;
+                pd.Property_Name = property_Details.Property_Name;
+                pd.Property_Pin = property_Details.Property_Pin;
+                pd.Property_State = property_Details.Property_State;
+                
+                pd.Seller_Id = property_Details.Seller_Id;
+
+                Property_Information pi = Db.Property_Information.First(m => m.Property_ID == property_Details.Property_ID);
+                pi.Total_Floor = property_Details.Property_Information.Total_Floor;
+                pi.Age = property_Details.Property_Information.Age;
+                pi.ExpectedRent = property_Details.Property_Information.ExpectedRent;
+                pi.Expected_Deposit = property_Details.Property_Information.Expected_Deposit;
+                pi.Floor = property_Details.Property_Information.Floor;
+                pi.Size = property_Details.Property_Information.Size;
+                pi.BHK = BHK;     
+                pi.Facing = Facing;
+                pi.Furnishing = Furnishing;
+                pi.Parking = Parking;
+                pi.Preferred_Tenants = Tenants;
+                
                 Db.SaveChanges();
+                }
+                catch
+                {
+                    return View(property_Details);
+                }
+
+
                 return RedirectToAction("Index");
             }
             ViewBag.Seller_Id = new SelectList(Db.Seller_Details, "Seller_ID", "Seller_Name", property_Details.Seller_Id);
@@ -138,6 +187,15 @@ namespace House_Rental_System.Controllers
             {
                 sd.Seller_Photo = new byte[image.ContentLength];
                 image.InputStream.Read(sd.Seller_Photo, 0, image.ContentLength);
+            }
+            else
+            {
+                int id = (int)Session["id"];
+                var img = Db.Seller_Details.Where(m => m.Seller_ID == id).Select(m => m.Seller_Photo).FirstOrDefault();
+                if (img != null)
+                {
+                    sd.Seller_Photo = img;
+                }
             }
             if (ModelState.IsValid)
             {

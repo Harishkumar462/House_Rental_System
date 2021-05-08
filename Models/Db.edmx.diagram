@@ -4,21 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="855a67ec906a42909e4a2f13836ec255" Name="Diagram1">
-        <EntityTypeShape EntityType="House_Rental_SystemModel.Customer_Details" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="House_Rental_SystemModel.Seller_Details" Width="1.5" PointX="2.875" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="House_Rental_SystemModel.Property_Details" Width="1.5" PointX="5.375" PointY="4.5" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Property_Details_Seller_Details" />
-        <EntityTypeShape EntityType="House_Rental_SystemModel.Property_Images" Width="1.5" PointX="7.625" PointY="5.125" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Property_Images_Property_Details" />
-        <EntityTypeShape EntityType="House_Rental_SystemModel.Booking_Details" Width="1.5" PointX="6.625" PointY="1.125" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Customer_Details" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Property_Details" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Seller_Details" />
-        <EntityTypeShape EntityType="House_Rental_SystemModel.Sold_Property" Width="1.5" PointX="9.625" PointY="0.75" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Customer_Details" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Property_Details" />
-        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Seller_Details" />
+      <Diagram DiagramId="9168bf0dfda145eeb87663ab877334e9" Name="Diagram1">
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Booking_Details" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Customer_Details" Width="1.5" PointX="6" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Property_Details" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Property_Images" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Property_Information" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Seller_Details" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="House_Rental_SystemModel.Sold_Property" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Customer_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Property_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Booking_Details_Seller_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Customer_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Property_Details_Seller_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Property_Images_Property_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Property_Information_Property_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Property_Details" ManuallyRouted="false" />
+        <AssociationConnector Association="House_Rental_SystemModel.FK_Sold_Property_Seller_Details" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

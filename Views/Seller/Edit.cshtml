@@ -5,89 +5,224 @@
     Layout = "~/Views/Shared/_SellerLayout.cshtml";
 }
 
-<h2>View</h2>
+<head>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Property_Details</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Property_ID)
+    <link href="~/assets/form/css/style.css" rel="stylesheet" />
+    <link href="~/assets/form/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" />
+</head>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @if (ViewBag.types != null)
-                {
-                    @Html.DropDownListFor(model => model.Property_Type, new SelectList(ViewBag.types))
-                }
-                @Html.ValidationMessageFor(model => model.Property_Type, "", new { @class = "text-danger" })
+
+<div class="wrapper">
+    <div class="inner">
+        @using (Html.BeginForm("Edit", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <h3>House Details</h3>
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Type</label>
+                    <div class="form-holder select">
+                        <select name="Type" id="" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="House">House</option>
+                            <option value="Flat">Flat</option>
+
+                        </select>
+                        <i class="zmdi zmdi-home"></i>
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Name</label>
+                    <div class="form-holder">
+
+                        @Html.EditorFor(model => model.Property_Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Property_Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Property_Name, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Address</label>
+                    <div class="form-holder">
+                        <i class="zmdi zmdi-pin"></i>
+                        @Html.EditorFor(model => model.Property_Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">State</label>
+                    <div class="form-holder">
+                        <i class="zmdi zmdi-city"></i>
+                        @Html.EditorFor(model => model.Property_State, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_State, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Property_Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Property_Address, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">City</label>
+                    <div class="form-holder">
+                        <i class="zmdi zmdi-city"></i>
+                        @Html.EditorFor(model => model.Property_City, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_City, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Pin</label>
+                    <div class="form-holder">
+                        <i class="zmdi zmdi-pin"></i>
+                        @Html.EditorFor(model => model.Property_Pin, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Pin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_State, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Property_State, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Property_State, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Expected Rent</label>
+                    <div class="form-holder">
+                        <i class="fa fa-rupee"></i>
+                        @Html.EditorFor(model => model.Property_Information.ExpectedRent, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Information.ExpectedRent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Expected Deposit</label>
+                    <div class="form-holder">
+                        <i class="fa fa-rupee"></i>
+                        @Html.EditorFor(model => model.Property_Information.Expected_Deposit, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Expected_Deposit, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">BHK</label>
+                    <div class="form-holder select">
+                        <select name="BHK" id="" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="1BHK">1BHK</option>
+                            <option value="2BHK">2BHK</option>
+                            <option value="3BHK">3BHK</option>
+                            <option value="4BHK">4BHK</option>
+                            <option value="5BHK">5BHK</option>
+                        </select>
+                        <i class="fa fa-bed"></i>
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Facing</label>
+                    <div class="form-holder select">
+                        <select name="Facing" id="" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="North">North</option>
+                            <option value="East">East</option>
+                            <option value="West">West</option>
+                            <option value="South">South</option>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_City, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Property_City, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Property_City, "", new { @class = "text-danger" })
+                        </select>
+                        <i class="zmdi zmdi-arrows"></i>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Furnishing</label>
+                    <div class="form-holder select">
+                        <select name="Furnishing" id="" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="Fully Furnished">Fully Furnished</option>
+                            <option value="Semi Furnished">Semi Furnished</option>
+                            <option value="Not Furnished">Not Furnished</option>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_Pin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Property_Pin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Property_Pin, "", new { @class = "text-danger" })
+
+                        </select>
+                        <i class="fa fa-bed"></i>
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Preferred Tenants</label>
+                    <div class="form-holder select">
+                        <select name="Tenants" id="" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="Family">Family</option>
+                            <option value="Bacholer">Bacholer</option>
+                            <option value="Family/Bacholer">Family/Bacholer</option>
+
+
+                        </select>
+                        <i class="zmdi zmdi-face"></i>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Property Age</label>
+                    <div class="form-holder">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Property_Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @if (ViewBag.Status != null)
-                {
-                    @Html.DropDownListFor(model => model.Property_Status, new SelectList(ViewBag.Status))
-                }
-                @Html.ValidationMessageFor(model => model.Property_Status, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Property_Information.Age, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Age, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Size</label>
+                    <div class="form-holder">
+                        <i class="zmdi zmdi-ruler"></i>
+                        @Html.EditorFor(model => model.Property_Information.Size, new { htmlAttributes = new { @class = "form-control", placeholder = "in sqft" } })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Size, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Floor</label>
+                    <div class="form-holder">
+                        <i class="zmdi zmdi-city"></i>
+                        @Html.EditorFor(model => model.Property_Information.Floor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Floor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Total Floor</label>
+                    <div class="form-holder">
+                        <i class="zmdi zmdi-city"></i>
+                        @Html.EditorFor(model => model.Property_Information.Total_Floor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Total_Floor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Parking</label>
+                    <div class="form-holder select">
+                        <select name="Parking" id="" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="Available">Available</option>
+                            <option value="Not Available">Not Available</option>
+                        </select>
+                        <i class="zmdi zmdi-car"></i>
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Status</label>
+                    <div class="form-holder select">
+                        <select name="Status" id="" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="Available">Available</option>
+                            <option value="Not Available">Not Available</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <center>
+                <button class="btn" type="submit" style="background-color: rgba(0, 171, 159, 0.73);color:white">Edit</button>
+            </center>
+
+
+        }
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+

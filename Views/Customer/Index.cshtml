@@ -6,8 +6,25 @@
 }
 
 
+
+@using (Html.BeginForm("Search", "Customer", FormMethod.Get))
+{
+    <input type="search" name="search" placeholder="Enter the City" />
+    <input type="submit" value="Submit" />
+}
+<div class="dropdown">
+    <button class="dropbtn">Filter</button>
+    <div class="dropdown-content">
+        @Html.ActionLink("1000-10000", "Filter", new { min = 1000, max = 10000 })
+        @Html.ActionLink("10000-50000", "Filter", new { min = 10000, max = 50000 })
+        @Html.ActionLink("50000-100000", "Filter", new { min = 50000, max = 100000 })
+    </div>
+</div>
 <table class="table">
     <tr>
+        <th>
+            Property Image
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Property_Type)
         </th>
@@ -29,38 +46,57 @@
         <th>
             @Html.DisplayNameFor(model => model.Property_Status)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seller_Details.Seller_Name)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_State)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_Pin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_Status)
-        </td>
-        <td>
-          
-            @Html.ActionLink("Details", "Details", new { id=item.Property_ID }) 
-           
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    var image = item.Property_Images;
+                    if (image.Count > 0)
+                    {
+                        var base64 = Convert.ToBase64String(image[0].Image);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        <img src="@imgsrc" style="width:100px; height:100px" />
+                    }
+
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Pin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Property_Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seller_Details.Seller_Name)
+            </td>
+            <td>
+
+                @Html.ActionLink("Details", "Details", new { id = item.Property_ID })
+
+            </td>
+        </tr>
+    }
 
 </table>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="House_Rental_SystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="House_Rental_SystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Booking_Details">
           <Key>
             <PropertyRef Name="Booking_Id" />
@@ -48,6 +48,23 @@
           <Property Name="img_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Image" Type="varbinary(max)" Nullable="false" />
           <Property Name="Property_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Property_Information">
+          <Key>
+            <PropertyRef Name="Property_ID" />
+          </Key>
+          <Property Name="BHK" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Floor" Type="int" Nullable="false" />
+          <Property Name="Total_Floor" Type="int" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Facing" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Size" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExpectedRent" Type="int" Nullable="false" />
+          <Property Name="Expected_Deposit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Preferred_Tenants" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Furnishing" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Parking" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Property_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Seller_Details">
           <Key>
@@ -139,6 +156,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Property_Information_Property_Details">
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Property_Information" Type="Self.Property_Information" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Property_Details">
+              <PropertyRef Name="Property_ID" />
+            </Principal>
+            <Dependent Role="Property_Information">
+              <PropertyRef Name="Property_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sold_Property_Customer_Details">
           <End Role="Customer_Details" Type="Self.Customer_Details" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -184,6 +215,7 @@
           <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Property_Details" EntityType="Self.Property_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Property_Images" EntityType="Self.Property_Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Property_Information" EntityType="Self.Property_Information" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seller_Details" EntityType="Self.Seller_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sold_Property" EntityType="Self.Sold_Property" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Booking_Details_Customer_Details" Association="Self.FK_Booking_Details_Customer_Details">
@@ -206,6 +238,10 @@
             <End Role="Property_Details" EntitySet="Property_Details" />
             <End Role="Property_Images" EntitySet="Property_Images" />
           </AssociationSet>
+          <AssociationSet Name="FK_Property_Information_Property_Details" Association="Self.FK_Property_Information_Property_Details">
+            <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Property_Information" EntitySet="Property_Information" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sold_Property_Customer_Details" Association="Self.FK_Sold_Property_Customer_Details">
             <End Role="Customer_Details" EntitySet="Customer_Details" />
             <End Role="Sold_Property" EntitySet="Sold_Property" />
@@ -219,10 +255,23 @@
             <End Role="Sold_Property" EntitySet="Sold_Property" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="House_Rental_SystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Booking_Details">
+          <Key>
+            <PropertyRef Name="Booking_Id" />
+          </Key>
+          <Property Name="Booking_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Property_Id" Type="Int32" Nullable="false" />
+          <Property Name="Customer_Id" Type="Int32" Nullable="false" />
+          <Property Name="Seller_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer_Details" Relationship="Self.FK_Booking_Details_Customer_Details" FromRole="Booking_Details" ToRole="Customer_Details" />
+          <NavigationProperty Name="Property_Details" Relationship="Self.FK_Booking_Details_Property_Details" FromRole="Booking_Details" ToRole="Property_Details" />
+          <NavigationProperty Name="Seller_Details" Relationship="Self.FK_Booking_Details_Seller_Details" FromRole="Booking_Details" ToRole="Seller_Details" />
+        </EntityType>
         <EntityType Name="Customer_Details">
           <Key>
             <PropertyRef Name="Customer_Id" />
@@ -235,8 +284,54 @@
           <Property Name="Customer_City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Customer_Profile" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Customer_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Booking_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Customer_Details" FromRole="Customer_Details" ToRole="Booking_Details" />
-          <NavigationProperty Name="Sold_Property" Relationship="House_Rental_SystemModel.FK_Sold_Property_Customer_Details" FromRole="Customer_Details" ToRole="Sold_Property" />
+          <NavigationProperty Name="Booking_Details" Relationship="Self.FK_Booking_Details_Customer_Details" FromRole="Customer_Details" ToRole="Booking_Details" />
+          <NavigationProperty Name="Sold_Property" Relationship="Self.FK_Sold_Property_Customer_Details" FromRole="Customer_Details" ToRole="Sold_Property" />
+        </EntityType>
+        <EntityType Name="Property_Details">
+          <Key>
+            <PropertyRef Name="Property_ID" />
+          </Key>
+          <Property Name="Property_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Property_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Property_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Property_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Property_State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Property_City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Property_Pin" Type="Int32" Nullable="false" />
+          <Property Name="Property_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seller_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Booking_Details" Relationship="Self.FK_Booking_Details_Property_Details" FromRole="Property_Details" ToRole="Booking_Details" />
+          <NavigationProperty Name="Seller_Details" Relationship="Self.FK_Property_Details_Seller_Details" FromRole="Property_Details" ToRole="Seller_Details" />
+          <NavigationProperty Name="Property_Images" Relationship="Self.FK_Property_Images_Property_Details" FromRole="Property_Details" ToRole="Property_Images" />
+          <NavigationProperty Name="Property_Information" Relationship="Self.FK_Property_Information_Property_Details" FromRole="Property_Details" ToRole="Property_Information" />
+          <NavigationProperty Name="Sold_Property" Relationship="Self.FK_Sold_Property_Property_Details" FromRole="Property_Details" ToRole="Sold_Property" />
+        </EntityType>
+        <EntityType Name="Property_Images">
+          <Key>
+            <PropertyRef Name="img_id" />
+          </Key>
+          <Property Name="img_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Property_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Property_Details" Relationship="Self.FK_Property_Images_Property_Details" FromRole="Property_Images" ToRole="Property_Details" />
+        </EntityType>
+        <EntityType Name="Property_Information">
+          <Key>
+            <PropertyRef Name="Property_ID" />
+          </Key>
+          <Property Name="BHK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Floor" Type="Int32" Nullable="false" />
+          <Property Name="Total_Floor" Type="Int32" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Facing" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExpectedRent" Type="Int32" Nullable="false" />
+          <Property Name="Expected_Deposit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Preferred_Tenants" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Furnishing" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Parking" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Property_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Property_Details" Relationship="Self.FK_Property_Information_Property_Details" FromRole="Property_Information" ToRole="Property_Details" />
         </EntityType>
         <EntityType Name="Seller_Details">
           <Key>
@@ -249,153 +344,10 @@
           <Property Name="Seller_state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Seller_Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Seller_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Property_Details_Seller_Details" FromRole="Seller_Details" ToRole="Property_Details" />
-          <NavigationProperty Name="Booking_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Seller_Details" FromRole="Seller_Details" ToRole="Booking_Details" />
-          <NavigationProperty Name="Sold_Property" Relationship="House_Rental_SystemModel.FK_Sold_Property_Seller_Details" FromRole="Seller_Details" ToRole="Sold_Property" />
+          <NavigationProperty Name="Booking_Details" Relationship="Self.FK_Booking_Details_Seller_Details" FromRole="Seller_Details" ToRole="Booking_Details" />
+          <NavigationProperty Name="Property_Details" Relationship="Self.FK_Property_Details_Seller_Details" FromRole="Seller_Details" ToRole="Property_Details" />
+          <NavigationProperty Name="Sold_Property" Relationship="Self.FK_Sold_Property_Seller_Details" FromRole="Seller_Details" ToRole="Sold_Property" />
         </EntityType>
-        <EntityContainer Name="House_Rental" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" />
-          <EntitySet Name="Seller_Details" EntityType="Self.Seller_Details" />
-          <EntitySet Name="Property_Details" EntityType="House_Rental_SystemModel.Property_Details" />
-          <AssociationSet Name="FK_Property_Details_Seller_Details" Association="House_Rental_SystemModel.FK_Property_Details_Seller_Details">
-            <End Role="Seller_Details" EntitySet="Seller_Details" />
-            <End Role="Property_Details" EntitySet="Property_Details" />
-          </AssociationSet>
-          <EntitySet Name="Property_Images" EntityType="House_Rental_SystemModel.Property_Images" />
-          <AssociationSet Name="FK_Property_Images_Property_Details" Association="House_Rental_SystemModel.FK_Property_Images_Property_Details">
-            <End Role="Property_Details" EntitySet="Property_Details" />
-            <End Role="Property_Images" EntitySet="Property_Images" />
-          </AssociationSet>
-          <EntitySet Name="Booking_Details" EntityType="House_Rental_SystemModel.Booking_Details" />
-          <AssociationSet Name="FK_Booking_Details_Customer_Details" Association="House_Rental_SystemModel.FK_Booking_Details_Customer_Details">
-            <End Role="Customer_Details" EntitySet="Customer_Details" />
-            <End Role="Booking_Details" EntitySet="Booking_Details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Booking_Details_Property_Details" Association="House_Rental_SystemModel.FK_Booking_Details_Property_Details">
-            <End Role="Property_Details" EntitySet="Property_Details" />
-            <End Role="Booking_Details" EntitySet="Booking_Details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Booking_Details_Seller_Details" Association="House_Rental_SystemModel.FK_Booking_Details_Seller_Details">
-            <End Role="Seller_Details" EntitySet="Seller_Details" />
-            <End Role="Booking_Details" EntitySet="Booking_Details" />
-          </AssociationSet>
-          <EntitySet Name="Sold_Property" EntityType="House_Rental_SystemModel.Sold_Property" />
-          <AssociationSet Name="FK_Sold_Property_Customer_Details" Association="House_Rental_SystemModel.FK_Sold_Property_Customer_Details">
-            <End Role="Customer_Details" EntitySet="Customer_Details" />
-            <End Role="Sold_Property" EntitySet="Sold_Property" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sold_Property_Property_Details" Association="House_Rental_SystemModel.FK_Sold_Property_Property_Details">
-            <End Role="Property_Details" EntitySet="Property_Details" />
-            <End Role="Sold_Property" EntitySet="Sold_Property" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sold_Property_Seller_Details" Association="House_Rental_SystemModel.FK_Sold_Property_Seller_Details">
-            <End Role="Seller_Details" EntitySet="Seller_Details" />
-            <End Role="Sold_Property" EntitySet="Sold_Property" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Property_Details">
-          <Key>
-            <PropertyRef Name="Property_ID" />
-          </Key>
-          <Property Name="Property_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Property_Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Property_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Property_Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Property_State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Property_City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Property_Pin" Type="Int32" Nullable="false" />
-          <Property Name="Property_Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Seller_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Seller_Details" Relationship="House_Rental_SystemModel.FK_Property_Details_Seller_Details" FromRole="Property_Details" ToRole="Seller_Details" />
-          <NavigationProperty Name="Property_Images" Relationship="House_Rental_SystemModel.FK_Property_Images_Property_Details" FromRole="Property_Details" ToRole="Property_Images" />
-          <NavigationProperty Name="Booking_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Property_Details" FromRole="Property_Details" ToRole="Booking_Details" />
-          <NavigationProperty Name="Sold_Property" Relationship="House_Rental_SystemModel.FK_Sold_Property_Property_Details" FromRole="Property_Details" ToRole="Sold_Property" />
-        </EntityType>
-        <Association Name="FK_Property_Details_Seller_Details">
-          <End Type="House_Rental_SystemModel.Seller_Details" Role="Seller_Details" Multiplicity="1" />
-          <End Type="House_Rental_SystemModel.Property_Details" Role="Property_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seller_Details">
-              <PropertyRef Name="Seller_ID" />
-            </Principal>
-            <Dependent Role="Property_Details">
-              <PropertyRef Name="Seller_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Property_Images">
-          <Key>
-            <PropertyRef Name="img_id" />
-          </Key>
-          <Property Name="img_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="Property_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Property_Images_Property_Details" FromRole="Property_Images" ToRole="Property_Details" />
-        </EntityType>
-        <Association Name="FK_Property_Images_Property_Details">
-          <End Type="House_Rental_SystemModel.Property_Details" Role="Property_Details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="House_Rental_SystemModel.Property_Images" Role="Property_Images" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property_Details">
-              <PropertyRef Name="Property_ID" />
-            </Principal>
-            <Dependent Role="Property_Images">
-              <PropertyRef Name="Property_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Booking_Details">
-          <Key>
-            <PropertyRef Name="Booking_Id" />
-          </Key>
-          <Property Name="Booking_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Property_Id" Type="Int32" Nullable="false" />
-          <Property Name="Customer_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Customer_Details" FromRole="Booking_Details" ToRole="Customer_Details" />
-          <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Property_Details" FromRole="Booking_Details" ToRole="Property_Details" />
-          <Property Name="Seller_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Seller_Details" Relationship="House_Rental_SystemModel.FK_Booking_Details_Seller_Details" FromRole="Booking_Details" ToRole="Seller_Details" />
-        </EntityType>
-        <Association Name="FK_Booking_Details_Customer_Details">
-          <End Type="House_Rental_SystemModel.Customer_Details" Role="Customer_Details" Multiplicity="1" />
-          <End Type="House_Rental_SystemModel.Booking_Details" Role="Booking_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer_Details">
-              <PropertyRef Name="Customer_Id" />
-            </Principal>
-            <Dependent Role="Booking_Details">
-              <PropertyRef Name="Customer_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Booking_Details_Property_Details">
-          <End Type="House_Rental_SystemModel.Property_Details" Role="Property_Details" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="House_Rental_SystemModel.Booking_Details" Role="Booking_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Property_Details">
-              <PropertyRef Name="Property_ID" />
-            </Principal>
-            <Dependent Role="Booking_Details">
-              <PropertyRef Name="Property_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Booking_Details_Seller_Details">
-          <End Type="House_Rental_SystemModel.Seller_Details" Role="Seller_Details" Multiplicity="1" />
-          <End Type="House_Rental_SystemModel.Booking_Details" Role="Booking_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seller_Details">
-              <PropertyRef Name="Seller_ID" />
-            </Principal>
-            <Dependent Role="Booking_Details">
-              <PropertyRef Name="Seller_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Sold_Property">
           <Key>
             <PropertyRef Name="Sold_Id" />
@@ -406,16 +358,54 @@
           <Property Name="Seller_Id" Type="Int32" Nullable="false" />
           <Property Name="Deposit_Amount" Type="Int32" Nullable="false" />
           <Property Name="Rental_Amount" Type="Int32" Nullable="false" />
-          <Property Name="Date_of_Sale" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Customer_Details" Relationship="House_Rental_SystemModel.FK_Sold_Property_Customer_Details" FromRole="Sold_Property" ToRole="Customer_Details" />
-          <NavigationProperty Name="Property_Details" Relationship="House_Rental_SystemModel.FK_Sold_Property_Property_Details" FromRole="Sold_Property" ToRole="Property_Details" />
-          <NavigationProperty Name="Seller_Details" Relationship="House_Rental_SystemModel.FK_Sold_Property_Seller_Details" FromRole="Sold_Property" ToRole="Seller_Details" />
+          <Property Name="Date_of_Sale" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Customer_Details" Relationship="Self.FK_Sold_Property_Customer_Details" FromRole="Sold_Property" ToRole="Customer_Details" />
+          <NavigationProperty Name="Property_Details" Relationship="Self.FK_Sold_Property_Property_Details" FromRole="Sold_Property" ToRole="Property_Details" />
+          <NavigationProperty Name="Seller_Details" Relationship="Self.FK_Sold_Property_Seller_Details" FromRole="Sold_Property" ToRole="Seller_Details" />
         </EntityType>
-        <Association Name="FK_Sold_Property_Customer_Details">
-          <End Type="House_Rental_SystemModel.Customer_Details" Role="Customer_Details" Multiplicity="1">
+        <Association Name="FK_Booking_Details_Customer_Details">
+          <End Role="Customer_Details" Type="Self.Customer_Details" Multiplicity="1" />
+          <End Role="Booking_Details" Type="Self.Booking_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer_Details">
+              <PropertyRef Name="Customer_Id" />
+            </Principal>
+            <Dependent Role="Booking_Details">
+              <PropertyRef Name="Customer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_Details_Property_Details">
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="House_Rental_SystemModel.Sold_Property" Role="Sold_Property" Multiplicity="*" />
+          <End Role="Booking_Details" Type="Self.Booking_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property_Details">
+              <PropertyRef Name="Property_ID" />
+            </Principal>
+            <Dependent Role="Booking_Details">
+              <PropertyRef Name="Property_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_Details_Seller_Details">
+          <End Role="Seller_Details" Type="Self.Seller_Details" Multiplicity="1" />
+          <End Role="Booking_Details" Type="Self.Booking_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller_Details">
+              <PropertyRef Name="Seller_ID" />
+            </Principal>
+            <Dependent Role="Booking_Details">
+              <PropertyRef Name="Seller_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_Property_Customer_Details">
+          <End Role="Customer_Details" Type="Self.Customer_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sold_Property" Type="Self.Sold_Property" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer_Details">
               <PropertyRef Name="Customer_Id" />
@@ -425,11 +415,53 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sold_Property_Property_Details">
-          <End Type="House_Rental_SystemModel.Property_Details" Role="Property_Details" Multiplicity="1">
+        <Association Name="FK_Property_Details_Seller_Details">
+          <End Role="Seller_Details" Type="Self.Seller_Details" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="House_Rental_SystemModel.Sold_Property" Role="Sold_Property" Multiplicity="*" />
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller_Details">
+              <PropertyRef Name="Seller_ID" />
+            </Principal>
+            <Dependent Role="Property_Details">
+              <PropertyRef Name="Seller_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_Images_Property_Details">
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Property_Images" Type="Self.Property_Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property_Details">
+              <PropertyRef Name="Property_ID" />
+            </Principal>
+            <Dependent Role="Property_Images">
+              <PropertyRef Name="Property_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_Information_Property_Details">
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Property_Information" Type="Self.Property_Information" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Property_Details">
+              <PropertyRef Name="Property_ID" />
+            </Principal>
+            <Dependent Role="Property_Information">
+              <PropertyRef Name="Property_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sold_Property_Property_Details">
+          <End Role="Property_Details" Type="Self.Property_Details" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sold_Property" Type="Self.Sold_Property" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property_Details">
               <PropertyRef Name="Property_ID" />
@@ -440,8 +472,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sold_Property_Seller_Details">
-          <End Type="House_Rental_SystemModel.Seller_Details" Role="Seller_Details" Multiplicity="1" />
-          <End Type="House_Rental_SystemModel.Sold_Property" Role="Sold_Property" Multiplicity="*" />
+          <End Role="Seller_Details" Type="Self.Seller_Details" Multiplicity="1" />
+          <End Role="Sold_Property" Type="Self.Sold_Property" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Seller_Details">
               <PropertyRef Name="Seller_ID" />
@@ -451,12 +483,67 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="House_Rental" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Booking_Details" EntityType="Self.Booking_Details" />
+          <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" />
+          <EntitySet Name="Property_Details" EntityType="Self.Property_Details" />
+          <EntitySet Name="Property_Images" EntityType="Self.Property_Images" />
+          <EntitySet Name="Property_Information" EntityType="Self.Property_Information" />
+          <EntitySet Name="Seller_Details" EntityType="Self.Seller_Details" />
+          <EntitySet Name="Sold_Property" EntityType="Self.Sold_Property" />
+          <AssociationSet Name="FK_Booking_Details_Customer_Details" Association="Self.FK_Booking_Details_Customer_Details">
+            <End Role="Customer_Details" EntitySet="Customer_Details" />
+            <End Role="Booking_Details" EntitySet="Booking_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_Details_Property_Details" Association="Self.FK_Booking_Details_Property_Details">
+            <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Booking_Details" EntitySet="Booking_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_Details_Seller_Details" Association="Self.FK_Booking_Details_Seller_Details">
+            <End Role="Seller_Details" EntitySet="Seller_Details" />
+            <End Role="Booking_Details" EntitySet="Booking_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_Property_Customer_Details" Association="Self.FK_Sold_Property_Customer_Details">
+            <End Role="Customer_Details" EntitySet="Customer_Details" />
+            <End Role="Sold_Property" EntitySet="Sold_Property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Details_Seller_Details" Association="Self.FK_Property_Details_Seller_Details">
+            <End Role="Seller_Details" EntitySet="Seller_Details" />
+            <End Role="Property_Details" EntitySet="Property_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Images_Property_Details" Association="Self.FK_Property_Images_Property_Details">
+            <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Property_Images" EntitySet="Property_Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Information_Property_Details" Association="Self.FK_Property_Information_Property_Details">
+            <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Property_Information" EntitySet="Property_Information" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_Property_Property_Details" Association="Self.FK_Sold_Property_Property_Details">
+            <End Role="Property_Details" EntitySet="Property_Details" />
+            <End Role="Sold_Property" EntitySet="Sold_Property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sold_Property_Seller_Details" Association="Self.FK_Sold_Property_Seller_Details">
+            <End Role="Seller_Details" EntitySet="Seller_Details" />
+            <End Role="Sold_Property" EntitySet="Sold_Property" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="House_Rental_SystemModelStoreContainer" CdmEntityContainer="House_Rental">
+          <EntitySetMapping Name="Booking_Details">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Booking_Details">
+              <MappingFragment StoreEntitySet="Booking_Details">
+                <ScalarProperty Name="Booking_Id" ColumnName="Booking_Id" />
+                <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Customer_Details">
             <EntityTypeMapping TypeName="House_Rental_SystemModel.Customer_Details">
               <MappingFragment StoreEntitySet="Customer_Details">
@@ -468,6 +555,48 @@
                 <ScalarProperty Name="Customer_City" ColumnName="Customer_City" />
                 <ScalarProperty Name="Customer_Profile" ColumnName="Customer_Profile" />
                 <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Property_Details">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Property_Details">
+              <MappingFragment StoreEntitySet="Property_Details">
+                <ScalarProperty Name="Property_ID" ColumnName="Property_ID" />
+                <ScalarProperty Name="Property_Type" ColumnName="Property_Type" />
+                <ScalarProperty Name="Property_Name" ColumnName="Property_Name" />
+                <ScalarProperty Name="Property_Address" ColumnName="Property_Address" />
+                <ScalarProperty Name="Property_State" ColumnName="Property_State" />
+                <ScalarProperty Name="Property_City" ColumnName="Property_City" />
+                <ScalarProperty Name="Property_Pin" ColumnName="Property_Pin" />
+                <ScalarProperty Name="Property_Status" ColumnName="Property_Status" />
+                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Property_Images">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Property_Images">
+              <MappingFragment StoreEntitySet="Property_Images">
+                <ScalarProperty Name="img_id" ColumnName="img_id" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Property_Information">
+            <EntityTypeMapping TypeName="House_Rental_SystemModel.Property_Information">
+              <MappingFragment StoreEntitySet="Property_Information">
+                <ScalarProperty Name="BHK" ColumnName="BHK" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="Total_Floor" ColumnName="Total_Floor" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Facing" ColumnName="Facing" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="ExpectedRent" ColumnName="ExpectedRent" />
+                <ScalarProperty Name="Expected_Deposit" ColumnName="Expected_Deposit" />
+                <ScalarProperty Name="Preferred_Tenants" ColumnName="Preferred_Tenants" />
+                <ScalarProperty Name="Furnishing" ColumnName="Furnishing" />
+                <ScalarProperty Name="Parking" ColumnName="Parking" />
+                <ScalarProperty Name="Property_ID" ColumnName="Property_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -484,50 +613,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Property_Details">
-            <EntityTypeMapping TypeName="House_Rental_SystemModel.Property_Details">
-              <MappingFragment StoreEntitySet="Property_Details">
-                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
-                <ScalarProperty Name="Property_Status" ColumnName="Property_Status" />
-                <ScalarProperty Name="Property_Pin" ColumnName="Property_Pin" />
-                <ScalarProperty Name="Property_City" ColumnName="Property_City" />
-                <ScalarProperty Name="Property_State" ColumnName="Property_State" />
-                <ScalarProperty Name="Property_Address" ColumnName="Property_Address" />
-                <ScalarProperty Name="Property_Name" ColumnName="Property_Name" />
-                <ScalarProperty Name="Property_Type" ColumnName="Property_Type" />
-                <ScalarProperty Name="Property_ID" ColumnName="Property_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Property_Images">
-            <EntityTypeMapping TypeName="House_Rental_SystemModel.Property_Images">
-              <MappingFragment StoreEntitySet="Property_Images">
-                <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="img_id" ColumnName="img_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Booking_Details">
-            <EntityTypeMapping TypeName="House_Rental_SystemModel.Booking_Details">
-              <MappingFragment StoreEntitySet="Booking_Details">
-                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
-                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
-                <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
-                <ScalarProperty Name="Booking_Id" ColumnName="Booking_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Sold_Property">
             <EntityTypeMapping TypeName="House_Rental_SystemModel.Sold_Property">
               <MappingFragment StoreEntitySet="Sold_Property">
-                <ScalarProperty Name="Date_of_Sale" ColumnName="Date_of_Sale" />
-                <ScalarProperty Name="Rental_Amount" ColumnName="Rental_Amount" />
-                <ScalarProperty Name="Deposit_Amount" ColumnName="Deposit_Amount" />
-                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
-                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
-                <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
                 <ScalarProperty Name="Sold_Id" ColumnName="Sold_Id" />
+                <ScalarProperty Name="Property_Id" ColumnName="Property_Id" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Seller_Id" ColumnName="Seller_Id" />
+                <ScalarProperty Name="Deposit_Amount" ColumnName="Deposit_Amount" />
+                <ScalarProperty Name="Rental_Amount" ColumnName="Rental_Amount" />
+                <ScalarProperty Name="Date_of_Sale" ColumnName="Date_of_Sale" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

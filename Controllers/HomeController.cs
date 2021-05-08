@@ -89,35 +89,26 @@ namespace House_Rental_System.Controllers
                 cd.Customer_Profile = new byte[image.ContentLength];
                 image.InputStream.Read(cd.Customer_Profile, 0, image.ContentLength);
             }
+            
             if (ModelState.IsValid)
-            { 
- 
-                    Db.Customer_Details.Add(cd);
-                    Db.SaveChanges();
+            {
+                Db.Customer_Details.Add(cd);
+                Db.SaveChanges();
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
                 
+                return View(cd);
             }
             //SendMail();
-            return RedirectToAction("Login", "Home");
+            
         }
         public ActionResult Logout()
         {
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
-        public void SendMail(string emailid)
-        {
-            MailMessage mailMessage = new MailMessage("harishkumarskv@gmail.com", emailid);
-            mailMessage.Subject = "Test";
-            mailMessage.Body = "";
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.Credentials = new System.Net.NetworkCredential()
-            {
-                UserName = "harishkumarskv@gmail.com",
-                Password = "harish462"
-            };
-            
-            smtpClient.EnableSsl= true;
-            smtpClient.Send(mailMessage);
-        }
+       
     }
 }

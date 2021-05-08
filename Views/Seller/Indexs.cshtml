@@ -1,0 +1,44 @@
+﻿@model IEnumerable<House_Rental_System.Models.Property_Details>
+
+@{
+    ViewBag.Title = "Indexs";
+    Layout = "~/Views/Shared/_SellerLayout.cshtml";
+}
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+</head>
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <div class="col s12 m7">
+            <div class="card horizontal">
+                <div class="card-image">
+                     @{
+                    var image = item.Property_Images;
+                    if (image.Count > 0)
+                    {
+                        var base64 = Convert.ToBase64String(image[0].Image);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        <img src="@imgsrc"  />
+                    }
+
+                }
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <span class="card-title">@Html.DisplayFor(modelItem => item.Property_Name)</span>
+                        @Html.DisplayFor(modelItem => item.Property_Type)
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

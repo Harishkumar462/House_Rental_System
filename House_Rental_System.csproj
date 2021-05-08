@@ -162,6 +162,9 @@
     <Compile Include="Models\Property_Images.cs">
       <DependentUpon>Db.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Property_Information.cs">
+      <DependentUpon>Db.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Seller_Details.cs">
       <DependentUpon>Db.tt</DependentUpon>
     </Compile>
@@ -171,6 +174,29 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\animate.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\fontawsom-all.min.css" />
+    <Content Include="assets\css\style.css" />
+    <Content Include="assets\form\css\style.css" />
+    <Content Include="assets\form\fonts\Abril_Fatface\OFL.txt" />
+    <Content Include="assets\form\fonts\material-design-iconic-font\css\material-design-iconic-font.css" />
+    <Content Include="assets\form\fonts\material-design-iconic-font\css\material-design-iconic-font.min.css" />
+    <Content Include="assets\form\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="assets\HouseRenntal-removebg-preview.png" />
+    <Content Include="assets\HouseRenntal.JPG" />
+    <Content Include="assets\images\lg.jpg" />
+    <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\jquery-3.2.1.min.js" />
+    <Content Include="assets\js\popper.js" />
+    <Content Include="assets\js\popper.min.js" />
+    <Content Include="assets\js\script.js" />
+    <Content Include="assets\webfonts\fa-brands-400.svg" />
+    <Content Include="assets\webfonts\fa-regular-400.svg" />
+    <Content Include="assets\webfonts\fa-solid-900.svg" />
+    <Content Include="assets\webfonts\Simple-Line-Icons.svg" />
+    <Content Include="assets\webfonts\Simple-Line-Iconsb26c.svg" />
+    <Content Include="assets\webfonts\themify.svg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -198,6 +224,47 @@
     <Content Include="Models\Db.edmx.diagram">
       <DependentUpon>Db.edmx</DependentUpon>
     </Content>
+    <Content Include="assets\css\bootstrap.min.css.map" />
+    <Content Include="assets\css\style.css.map" />
+    <Content Include="assets\fonts\PT_Sans-Web-Bold.ttf" />
+    <Content Include="assets\fonts\PT_Sans-Web-Regular.ttf" />
+    <Content Include="assets\fonts\RobotoSlab-Bold.ttf" />
+    <Content Include="assets\fonts\RobotoSlab-Regular.ttf" />
+    <Content Include="assets\js\bootstrap.min.js.map" />
+    <Content Include="assets\js\popper.min.js.map" />
+    <Content Include="assets\webfonts\fa-brands-400.eot" />
+    <Content Include="assets\webfonts\fa-brands-400.ttf" />
+    <Content Include="assets\webfonts\fa-brands-400.woff" />
+    <Content Include="assets\webfonts\fa-brands-400.woff2" />
+    <Content Include="assets\webfonts\fa-regular-400.eot" />
+    <Content Include="assets\webfonts\fa-regular-400.ttf" />
+    <Content Include="assets\webfonts\fa-regular-400.woff" />
+    <Content Include="assets\webfonts\fa-regular-400.woff2" />
+    <Content Include="assets\webfonts\fa-solid-900.eot" />
+    <Content Include="assets\webfonts\fa-solid-900.ttf" />
+    <Content Include="assets\webfonts\fa-solid-900.woff" />
+    <Content Include="assets\webfonts\fa-solid-900.woff2" />
+    <Content Include="assets\webfonts\Simple-Line-Icons.eot" />
+    <Content Include="assets\webfonts\Simple-Line-Icons.ttf" />
+    <Content Include="assets\webfonts\Simple-Line-Icons.woff" />
+    <Content Include="assets\webfonts\Simple-Line-Icons.woff2" />
+    <Content Include="assets\webfonts\Simple-Line-Iconsb26c.eot" />
+    <Content Include="assets\webfonts\Simple-Line-Iconsb26c.ttf" />
+    <Content Include="assets\webfonts\Simple-Line-Iconsb26c.woff" />
+    <Content Include="assets\webfonts\Simple-Line-Iconsb26c.woff2" />
+    <Content Include="assets\webfonts\themify.eot" />
+    <Content Include="assets\webfonts\themify.ttf" />
+    <Content Include="assets\webfonts\themify.woff" />
+    <Content Include="assets\form\css\style.css.map" />
+    <Content Include="assets\form\css\style.scss" />
+    <Content Include="assets\form\fonts\Abril_Fatface\AbrilFatface-Regular.ttf" />
+    <Content Include="assets\form\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="assets\form\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="assets\form\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="assets\form\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="assets\form\fonts\muli\Muli-Bold.ttf" />
+    <Content Include="assets\form\fonts\muli\Muli-Regular.ttf" />
+    <Content Include="assets\form\fonts\muli\Muli-SemiBold.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -244,9 +311,12 @@
     <Content Include="Views\Seller\Confirmation.cshtml" />
     <Content Include="Views\Seller\SoldProperty.cshtml" />
     <Content Include="Views\Customer\RentedProperties.cshtml" />
+    <Content Include="Views\Customer\Search.cshtml" />
+    <Content Include="Views\Seller\Indexs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="assets\plugins\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
