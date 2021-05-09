@@ -6,97 +6,51 @@
 }
 
 
+<head>
+    <link href="~/assets/form/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" />
+</head>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
 
-@using (Html.BeginForm("Search", "Customer", FormMethod.Get))
-{
-    <input type="search" name="search" placeholder="Enter the City" />
-    <input type="submit" value="Submit" />
-}
-<div class="dropdown">
-    <button class="dropbtn">Filter</button>
-    <div class="dropdown-content">
-        @Html.ActionLink("1000-10000", "Filter", new { min = 1000, max = 10000 })
-        @Html.ActionLink("10000-50000", "Filter", new { min = 10000, max = 50000 })
-        @Html.ActionLink("50000-100000", "Filter", new { min = 50000, max = 100000 })
+            <div class="col-sm-4">
+                <div class="card">
+                    @{
+                        var images = item.Property_Images;
+                        if (images.Count > 0)
+                        {
+                                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel";">
+                                            <div class="carousel-inner">
+                                                @{int i = 0;}
+                                                @foreach (var image in images)
+                                                {
+                                                    i++;
+                                                    var active = i == 1 ? "active" : "";
+                                                    var base64 = Convert.ToBase64String(image.Image);
+                                                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                    <div class="carousel-item @active">
+                                                        <img class="d-block w-100" src="@imgsrc" alt="First slide" style="border-radius: 5px;">
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                        }
+
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Property_Name</h5>
+                        <p class="card-text zmdi zmdi-pin">  <b>Address</b>  @item.Property_Address (@item.Property_Pin)</p>
+                        <p class="card-text fa fa-bed">  <b>BHK</b>  @item.Property_Information.BHK</p><br />
+                        <p class="card-text fa fa-rupee">  <b>Deposit</b>  @item.Property_Information.Expected_Deposit</p><br />
+                        <p class="card-text fa fa-rupee">  <b>Rent</b>  @item.Property_Information.ExpectedRent</p><br />
+                        <a href="~/Customer/Details/@item.Property_ID" class="btn fa fa-envelope" style="background-color: rgba(0, 171, 159, 0.73);color:white;">  Details</a>
+
+                    </div>
+                </div>
+            </div>
+
+
+        }
     </div>
 </div>
-<table class="table">
-    <tr>
-        <th>
-            Property Image
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_Pin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Seller_Details.Seller_Name)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @{
-                    var image = item.Property_Images;
-                    if (image.Count > 0)
-                    {
-                        var base64 = Convert.ToBase64String(image[0].Image);
-                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                        <img src="@imgsrc" style="width:100px; height:100px" />
-                    }
-
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property_Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property_Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property_State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property_City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property_Pin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property_Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Seller_Details.Seller_Name)
-            </td>
-            <td>
-
-                @Html.ActionLink("Details", "Details", new { id = item.Property_ID })
-
-            </td>
-        </tr>
-    }
-
-</table>

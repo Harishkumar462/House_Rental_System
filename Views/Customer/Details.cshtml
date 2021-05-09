@@ -3,101 +3,215 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<div>
-    <h4>Property_Details</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Property_Type)
-        </dt>
+<head>
 
-        <dd>
-            @Html.DisplayFor(model => model.Property_Type)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Property_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Property_Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Property_Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Property_Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Property_State)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Property_State)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Property_City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Property_City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Property_Pin)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Property_Pin)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Property_Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Property_Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Seller_Details.Seller_Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Seller_Details.Seller_Name)
-        </dd>
-        @{
-            var imgs = Model.Property_Images;
-            if (imgs.Count > 0)
-            {
-                foreach (var image in imgs)
-                {
-
-                    var base64 = Convert.ToBase64String(image.Image);
-                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img class="d-block w-100" src="@imgsrc">
-                            </div>
+    <link href="~/assets/form/css/style.css" rel="stylesheet" />
+    <link href="~/assets/form/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" />
+</head>
+<center>
+    @{
+        var imgs = Model.Property_Images;
+        if (imgs.Count > 0)
+        {
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" style="width:50%;height:50%; margin-top:4%;">
+                <div class="carousel-inner">
+                    @{int i = 0;}
+                    @foreach (var image in imgs)
+                    {
+                        i++;
+                        var active = i == 1 ? "active" : "";
+                        var base64 = Convert.ToBase64String(image.Image);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        <div class="carousel-item @active">
+                            <img class="d-block w-100" src="@imgsrc" alt="First slide"style="border-radius: 5px;">
                         </div>
-                    </div>
-
-
-                }
-            }
+                    }
+                </div>
+            </div>
         }
-        <button class="btn"><i class="fa fa-edit" style="color:cornflowerblue"></i>@Html.ActionLink("Request", "PropertyRequest", new { Pid = Model.Property_ID, Sid = Model.Seller_Id })</button>
+    }
+</center>
 
-    </dl>
+<div class="wrapper">
+    <div class="inner">
+
+        <h3>House Details</h3>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">Type</label>
+                <div class="form-holder ">
+                    <i class="zmdi zmdi-home"></i>
+                    @Html.EditorFor(model => model.Property_Type, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Name</label>
+                <div class="form-holder">
+
+                    @Html.EditorFor(model => model.Property_Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">Address</label>
+                <div class="form-holder">
+                    <i class="zmdi zmdi-pin"></i>
+                    @Html.EditorFor(model => model.Property_Address, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">State</label>
+                <div class="form-holder">
+                    <i class="zmdi zmdi-city"></i>
+                    @Html.EditorFor(model => model.Property_State, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">City</label>
+                <div class="form-holder">
+                    <i class="zmdi zmdi-city"></i>
+                    @Html.EditorFor(model => model.Property_City, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Pin</label>
+                <div class="form-holder">
+                    <i class="zmdi zmdi-pin"></i>
+                    @Html.EditorFor(model => model.Property_Pin, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">Expected Rent</label>
+                <div class="form-holder">
+                    <i class="fa fa-rupee"></i>
+                    @Html.EditorFor(model => model.Property_Information.ExpectedRent, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Expected Deposit</label>
+                <div class="form-holder">
+                    <i class="fa fa-rupee"></i>
+                    @Html.EditorFor(model => model.Property_Information.Expected_Deposit, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">BHK</label>
+                <div class="form-holder ">
+                    @Html.EditorFor(model => model.Property_Information.BHK, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                    <i class="fa fa-bed"></i>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Facing</label>
+                <div class="form-holder ">
+                    @Html.EditorFor(model => model.Property_Information.Facing, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                    <i class="zmdi zmdi-arrows"></i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">Furnishing</label>
+                <div class="form-holder ">
+                    @Html.EditorFor(model => model.Property_Information.Furnishing, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                    <i class="fa fa-bed"></i>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Preferred Tenants</label>
+                <div class="form-holder ">
+                    @Html.EditorFor(model => model.Property_Information.Preferred_Tenants, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                    <i class="zmdi zmdi-face"></i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">Property Age</label>
+                <div class="form-holder">
+
+                    @Html.EditorFor(model => model.Property_Information.Age, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Size</label>
+                <div class="form-holder">
+                    <i class="zmdi zmdi-ruler"></i>
+                    @Html.EditorFor(model => model.Property_Information.Size, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", placeholder = "in sqft", style = "color:black;" } })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">Floor</label>
+                <div class="form-holder">
+                    <i class="zmdi zmdi-city"></i>
+                    @Html.EditorFor(model => model.Property_Information.Floor, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Total Floor</label>
+                <div class="form-holder">
+                    <i class="zmdi zmdi-city"></i>
+                    @Html.EditorFor(model => model.Property_Information.Total_Floor, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-wrapper">
+                <label for="">Parking</label>
+                <div class="form-holder ">
+                    @Html.EditorFor(model => model.Property_Information.Parking, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                    <i class="zmdi zmdi-car"></i>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <label for="">Status</label>
+                <div class="form-holder ">
+                    @Html.EditorFor(model => model.Property_Status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
+
+                </div>
+            </div>
+        </div>
+
+        <center>
+            @Html.ActionLink("Request", "PropertyRequest",new { pid= @Model.Property_ID,sid= @Model.Seller_Id },new {@class="btn",style= "background-color: rgba(0, 171, 159, 0.73);color:white;" })
+            
+
+        </center>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+
+
+
+
+
+

@@ -312,7 +312,6 @@
     <Content Include="Views\Seller\SoldProperty.cshtml" />
     <Content Include="Views\Customer\RentedProperties.cshtml" />
     <Content Include="Views\Customer\Search.cshtml" />
-    <Content Include="Views\Seller\Indexs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
