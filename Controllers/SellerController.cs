@@ -457,7 +457,7 @@ namespace House_Rental_System.Controllers
 
         public void RejectionMail(string emailid,string propertyname,string propertyaddress)
         {
-            MailMessage mailMessage = new MailMessage("harishsnape1999@gmail.com", emailid);
+            MailMessage mailMessage = new MailMessage("", emailid);
             mailMessage.IsBodyHtml = true;
             mailMessage.Subject = "House Rental";
             string link = "https://localhost:44376/Home/Index";
@@ -466,8 +466,8 @@ namespace House_Rental_System.Controllers
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
             smtpClient.Credentials = new System.Net.NetworkCredential()
             {
-                UserName = "harishsnape1999@gmail.com",
-                Password = "harish462"
+                UserName = "",
+                Password = ""
             };
 
             smtpClient.EnableSsl = true;
@@ -475,7 +475,7 @@ namespace House_Rental_System.Controllers
         }
         public void ConfirmationMail(string emailid, string propertyname, string propertyaddress)
         {
-            MailMessage mailMessage = new MailMessage("harishsnape1999@gmail.com", emailid);
+            MailMessage mailMessage = new MailMessage("", emailid);
             mailMessage.IsBodyHtml = true;
             mailMessage.Subject = "House Rental";
             string link = "https://localhost:44376/Home/Index";
@@ -484,8 +484,8 @@ namespace House_Rental_System.Controllers
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
             smtpClient.Credentials = new System.Net.NetworkCredential()
             {
-                UserName = "harishsnape1999@gmail.com",
-                Password = "harish462"
+                UserName = "",
+                Password = ""
             };
 
             smtpClient.EnableSsl = true;
