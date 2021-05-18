@@ -325,7 +325,7 @@ namespace House_Rental_System.Controllers
         }
         public ActionResult Profile()
         {
-            int id =(int) Session["id"];
+            int id =(int) Session["sellerid"];
             var result = Db.Seller_Details.Where(m=>m.Seller_ID==id).FirstOrDefault();
             ViewBag.image =result.Seller_Photo ;
             return View(result);

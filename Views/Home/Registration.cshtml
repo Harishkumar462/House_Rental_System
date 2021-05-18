@@ -107,7 +107,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
                                     </div>
-                                    @Html.EditorFor(model => model.Customer_Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                                    @Html.PasswordFor(model => model.Customer_Password, new {@class = "form-control", @placeholder = "Password" } )
                                     @Html.ValidationMessageFor(model => model.Customer_Password, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="input-group mb-3">
