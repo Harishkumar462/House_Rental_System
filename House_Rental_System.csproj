@@ -219,6 +219,26 @@
       <DependentUpon>Db.edmx</DependentUpon>
       <LastGenOutput>Db.cs</LastGenOutput>
     </Content>
+    <Content Include="ScreenShot\CustomerLogin.JPG" />
+    <Content Include="ScreenShot\Customer_Index.JPG" />
+    <Content Include="ScreenShot\Customer_Profile.JPG" />
+    <Content Include="ScreenShot\Customer_PropertyDetails.JPG" />
+    <Content Include="ScreenShot\Customer_PropertyDetails2.JPG" />
+    <Content Include="ScreenShot\Customer_RentedProperties.JPG" />
+    <Content Include="ScreenShot\Customer_RequestedProperty.JPG" />
+    <Content Include="ScreenShot\Home.JPG" />
+    <Content Include="ScreenShot\SellerLogin.JPG" />
+    <Content Include="ScreenShot\Seller_AddProperty.JPG" />
+    <Content Include="ScreenShot\Seller_Confirmatoin.JPG" />
+    <Content Include="ScreenShot\Seller_CustomerDetails.JPG" />
+    <Content Include="ScreenShot\Seller_CustomerRequest.JPG" />
+    <Content Include="ScreenShot\Seller_EditProperty.JPG" />
+    <Content Include="ScreenShot\Seller_EditProperty2.JPG" />
+    <Content Include="ScreenShot\Seller_EditProperty3.JPG" />
+    <Content Include="ScreenShot\Seller_Index.JPG" />
+    <Content Include="ScreenShot\Seller_Profile.JPG" />
+    <Content Include="ScreenShot\Seller_SoldProperty.JPG" />
+    <Content Include="ScreenShot\TopSeller.JPG" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Db.edmx">
