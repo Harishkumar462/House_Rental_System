@@ -138,6 +138,7 @@
     <Compile Include="Models\Booking_Details.cs">
       <DependentUpon>Db.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TopSellerViewModel.cs" />
     <Compile Include="Models\Customer_Details.cs">
       <DependentUpon>Db.tt</DependentUpon>
     </Compile>
@@ -183,6 +184,7 @@
     <Content Include="assets\form\fonts\material-design-iconic-font\css\material-design-iconic-font.css" />
     <Content Include="assets\form\fonts\material-design-iconic-font\css\material-design-iconic-font.min.css" />
     <Content Include="assets\form\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="assets\home.jpg" />
     <Content Include="assets\HouseRenntal-removebg-preview.png" />
     <Content Include="assets\HouseRenntal.JPG" />
     <Content Include="assets\images\lg.jpg" />
@@ -191,6 +193,8 @@
     <Content Include="assets\js\popper.js" />
     <Content Include="assets\js\popper.min.js" />
     <Content Include="assets\js\script.js" />
+    <Content Include="assets\profile.css" />
+    <Content Include="assets\profile.png" />
     <Content Include="assets\webfonts\fa-brands-400.svg" />
     <Content Include="assets\webfonts\fa-regular-400.svg" />
     <Content Include="assets\webfonts\fa-solid-900.svg" />
@@ -312,6 +316,9 @@
     <Content Include="Views\Seller\SoldProperty.cshtml" />
     <Content Include="Views\Customer\RentedProperties.cshtml" />
     <Content Include="Views\Customer\Search.cshtml" />
+    <Content Include="Views\Shared\_Customer1Layout.cshtml" />
+    <Content Include="Views\Customer\TopSeller.cshtml" />
+    <Content Include="Views\Customer\PriceRange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

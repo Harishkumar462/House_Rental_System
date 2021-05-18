@@ -11,7 +11,8 @@ namespace House_Rental_System.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Customer_Details
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,12 +23,19 @@ namespace House_Rental_System.Models
         }
     
         public int Customer_Id { get; set; }
+        [Required(ErrorMessage = "Please enter the name")]
         public string Customer_Name { get; set; }
+        [Required(ErrorMessage = "Please enter the Email")]
         public string Customer_Email { get; set; }
+        [Required(ErrorMessage = "Please enter the Phone")]
         public string Customer_Phone { get; set; }
+        [Required(ErrorMessage = "Please enter the state")]
         public string Customer_State { get; set; }
+        [Required(ErrorMessage = "Please enter the city")]
         public string Customer_City { get; set; }
+
         public byte[] Customer_Profile { get; set; }
+        [Required(ErrorMessage = "Please enter the password")]
         public string Customer_Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

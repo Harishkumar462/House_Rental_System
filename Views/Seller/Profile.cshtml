@@ -5,69 +5,104 @@
     Layout = "~/Views/Shared/_SellerLayout.cshtml";
 }
 
-<h2>Profile</h2>
+<head>
 
-<div>
-    <h4>Seller_Details</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Seller_Name)
-        </dt>
+    <link rel="shortcut icon" href="~/assets/images/fav.jpg">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
 
-        <dd>
-            @Html.DisplayFor(model => model.Seller_Name)
-        </dd>
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css" />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Seller_Email)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Seller_Email)
-        </dd>
+</head>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Seller_Phone)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Seller_Phone)
-        </dd>
+<div class="container-fluid ">
+    <div class="container ">
+        <div class="row ">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Seller_state)
-        </dt>
+            <div class="col-sm-10 login-box">
+                <div class="row">
+                    <div class="col-lg-4 col-md-5 box-de">
+                        <div class="small-logo">
 
-        <dd>
-            @Html.DisplayFor(model => model.Seller_state)
-        </dd>
+                            <img src="~/assets/HouseRenntal-removebg-preview.png" style="width:75px;height:75px;" />
+                        </div>
+                        <br /><br />
+                        <div class="ditk-inf sup-oi">
+                            @{if (ViewBag.image != null)
+                                {
+                                    var base64 = Convert.ToBase64String(ViewBag.image);
+                                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                    <img src='@imgsrc' style="height:100px;width:100px;border-radius:50%;border:1px solid white;" />
+                                }
+                                else
+                                {
+                                    <img src="~/assets/profile.png" />
+                                }
+                            }
+                            <br /><br /><br />
+                            <a href="~/Seller/EditProfile/@Model.Seller_ID" class="btn fa fa-edit" style="        background-color: white;color: rgba(0, 171, 159, 0.73);">
+                                Edit
+                            </a>
+                        </div>
+                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Seller_Photo)
-        </dt>
+                    <div class="col-lg-8 col-md-7 log-det">
 
-        <dd>
-            @{if (ViewBag.image != null)
-                {
-                    var base64 = Convert.ToBase64String(ViewBag.image);
-                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                    <img src='@imgsrc' style="height:100px;width:100px;" />
-                }
-            }
-        </dd>
+                        <h2>Profile</h2>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Seller_Password)
-        </dt>
+                        <div class="text-box-cont">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="far fa-user"></i>
+                                    </span>
+                                </div>
+                                @Html.EditorFor(model => model.Seller_Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Full Name", @readonly = "readonly" } })
 
-        <dd>
-            @Html.DisplayFor(model => model.Seller_Password)
-        </dd>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="far fa-envelope"></i>
+                                    </span>
+                                </div>
+                                @Html.EditorFor(model => model.Seller_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @readonly = "readonly" } })
 
-    </dl>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>
+                                </div>
+                                @Html.EditorFor(model => model.Seller_Phone, new { htmlAttributes = new { @class = "form-control", @placeholder = "PhoneNo", @readonly = "readonly" } })
+
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-city"></i></span>
+                                </div>
+                                @Html.EditorFor(model => model.Seller_state, new { htmlAttributes = new { @class = "form-control", @placeholder = "State", @readonly = "readonly" } })
+
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                                </div>
+                                @Html.EditorFor(model => model.Seller_Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @readonly = "readonly" } })
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "EditProfile", new { id = Model.Seller_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

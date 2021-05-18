@@ -11,20 +11,33 @@ namespace House_Rental_System.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Property_Information
     {
+        [Required(ErrorMessage = "Please select the bhk")]
         public string BHK { get; set; }
+        [Required(ErrorMessage = "Please enter the floor")]
         public int Floor { get; set; }
+        [Required(ErrorMessage = "Please enter the total")]
         public int Total_Floor { get; set; }
+        [Required(ErrorMessage = "Please enter the age")]
         public int Age { get; set; }
+        [Required(ErrorMessage = "Please select the facing")]
         public string Facing { get; set; }
+        [Required(ErrorMessage = "Please select the size")]
         public string Size { get; set; }
+        [Required(ErrorMessage = "Please enter the rent")]
         public int ExpectedRent { get; set; }
+        [Required(ErrorMessage = "Please enter the deposit")]
         public string Expected_Deposit { get; set; }
+        [Required(ErrorMessage = "Please select the tenant")]
         public string Preferred_Tenants { get; set; }
+        [Required(ErrorMessage = "Please select the furnish")]
         public string Furnishing { get; set; }
+        [Required(ErrorMessage = "Please select the parking")]
         public string Parking { get; set; }
+
         public int Property_ID { get; set; }
     
         public virtual Property_Details Property_Details { get; set; }

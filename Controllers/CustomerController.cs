@@ -21,6 +21,20 @@ namespace House_Rental_System.Controllers
             List<Property_Details> property = Db.Property_Details.Where(m => m.Property_City == result.Customer_City && !propid.Contains(m.Property_ID) &&m.Property_Status=="Available").ToList<Property_Details>();
             return View(property);
         }
+        [HttpPost]
+        public JsonResult Autocomplete(string Prefix)
+        {
+            var property_city = (from p in Db.Property_Details
+                                 where p.Property_City.StartsWith(Prefix)
+                                 select new
+                                 {
+                                     label = p.Property_City,
+                                     val = p.Property_City
+                                 }).ToList();
+            var prop = property_city.Distinct();
+            return Json(prop);
+            
+        }
         public ActionResult Profile()
         {
             int id = (int)Session["id"];
@@ -111,8 +125,52 @@ namespace House_Rental_System.Controllers
         }
         public ActionResult Search(string search)
         {
-            List<Property_Details> property = Db.Property_Details.Where(m => m.Property_City == search && m.Property_Status == "Available").ToList<Property_Details>();
-            return View(property);
+            Session["search"] = search;
+            if (Session["min"] != null)
+            {
+                int min = (int)Session["min"];
+                int max = (int)Session["max"];
+                List<Property_Details> property = Db.Property_Details.Where(m => m.Property_City == search && m.Property_Status == "Available" && m.Property_Information.ExpectedRent >= min && m.Property_Information.ExpectedRent <= max).ToList<Property_Details>(); 
+                return View(property);
+            }
+            else
+            {
+                List<Property_Details> property = Db.Property_Details.Where(m => m.Property_City == search && m.Property_Status == "Available").ToList<Property_Details>();
+                return View(property);
+            }
+            
+            
+        }
+        public ActionResult PriceRange(int min,int max)
+        {
+            Session["min"] = min;
+            Session["max"] = max;
+            if (Session["search"] != null)
+            {
+                string city = (string)Session["search"];
+                var result = Db.Property_Details.Where(m => m.Property_Information.ExpectedRent >= min && m.Property_Information.ExpectedRent <= max  && m.Property_City==city && m.Property_Status == "Available").ToList();
+                return View(result);
+            }
+            else
+            {
+                var result = Db.Property_Details.Where(m => m.Property_Information.ExpectedRent >= min && m.Property_Information.ExpectedRent <= max && m.Property_Status == "Available").ToList();
+                return View(result);
+            }
+            
+        }
+        public ActionResult TopSeller()
+        {
+            var sellers = from s in Db.Sold_Property group s by s.Seller_Id;
+            var topseller = sellers.OrderByDescending(m => m.Count()).Take(5);
+            var topsellerid = topseller.Select(m => m.Key);
+            var seller = Db.Seller_Details.Where(m => topsellerid.Contains(m.Seller_ID)).ToList();
+            List<int> count = new List<int>();
+            foreach(var item in topsellerid)
+            {
+                count.Add(Db.Sold_Property.Count(m => m.Seller_Id == item));
+            }
+            ViewBag.count = count;
+            return View(seller);
         }
     }
 }

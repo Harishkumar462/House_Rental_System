@@ -5,47 +5,53 @@
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<h2>RentedProperties</h2>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Deposit_Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rental_Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date_of_Sale)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Property_Details.Property_Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Seller_Details.Seller_Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Deposit_Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rental_Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_of_Sale)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Property_Details.Property_Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Seller_Details.Seller_Name)
-        </td>
-    </tr>
-}
+<div class="table-responsive">
+    <table class="table table-success table-striped" style="margin-top:1%;">
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Seller Name
+            </th>
+            <th>
+                Rent
+            </th>
+            <th>
+                Deposit
+            </th>
+            <th>
+                Date of Sale
+            </th>
+            
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Property_Details.Property_Type)
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seller_Details.Seller_Name)
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rental_Amount)
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deposit_Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_of_Sale)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

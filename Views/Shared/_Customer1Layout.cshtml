@@ -20,10 +20,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-</head>
-<body>
     
 
+</head>
+<body>
     <nav class="navbar navbar-expand-lg navbar-light " style="background-color: rgba(0, 171, 159, 0.73);">
         <a class="navbar-brand" href="~/Customer" style="font-weight:bold">House Rental</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,10 +38,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="~/Customer/Property" style="color:white;font-weight:bold;font-size:medium;">RequestedProperty</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white;font-weight:bold;font-size:medium;">
+                        Price Range
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @Html.ActionLink("  1000-10000", "PriceRange", new { min = 1000, max = 10000 }, new { @class = "dropdown-item fa fa-rupee", style = "color:rgba(0, 171, 159, 0.73);font-weight:bold;font-size:medium;" })
+                        @Html.ActionLink("  10001-20000", "PriceRange", new { min = 10001, max = 20000 }, new { @class = "dropdown-item fa fa-rupee", style = "color:rgba(0, 171, 159, 0.73);font-weight:bold;font-size:medium;" })
+                        @Html.ActionLink("  20001-50000", "PriceRange", new { min = 20001, max = 50000 }, new { @class = "dropdown-item fa fa-rupee", style = "color:rgba(0, 171, 159, 0.73);font-weight:bold;font-size:medium;" })
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="~/Customer/Topseller" style="color:white;font-weight:bold;font-size:medium;">Top Seller</a>
                 </li>
-
             </ul>
             
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -56,15 +65,11 @@
         </div>
     </nav>
 
-
     <div class="container body-content">
         @RenderBody()
         
         
     </div>
-
-    
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

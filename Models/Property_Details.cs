@@ -11,7 +11,8 @@ namespace House_Rental_System.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Property_Details
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,15 +22,23 @@ namespace House_Rental_System.Models
             this.Property_Images = new List<Property_Images>();
             this.Sold_Property = new HashSet<Sold_Property>();
         }
-    
+       
         public int Property_ID { get; set; }
+        [Required(ErrorMessage = "Please select type")]
         public string Property_Type { get; set; }
+        [Required(ErrorMessage = "Please enter the name")]
         public string Property_Name { get; set; }
+        [Required(ErrorMessage = "Please enter the address")]
         public string Property_Address { get; set; }
+        [Required(ErrorMessage = "Please enter the state")]
         public string Property_State { get; set; }
+        [Required(ErrorMessage = "Please enter the city")]
         public string Property_City { get; set; }
+        [Required(ErrorMessage = "Please enter the pin")]
         public int Property_Pin { get; set; }
+        [Required(ErrorMessage = "Please select the status")]
         public string Property_Status { get; set; }
+        
         public int Seller_Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

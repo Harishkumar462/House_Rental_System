@@ -24,20 +24,16 @@
                 <div class="form-wrapper">
                     <label for="">Type</label>
                     <div class="form-holder select">
-                        <select name="Type" id="" class="form-control">
-                            <option value="">Select Option</option>
-                            <option value="House">House</option>
-                            <option value="Flat">Flat</option>
-
-                        </select>
+                        @Html.DropDownListFor(model=>model.Property_Type, ViewData["type"] as List<SelectListItem>, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Property_Type, "", new { @class = "text-danger" })
                         <i class="zmdi zmdi-home"></i>
                     </div>
                 </div>
                 <div class="form-wrapper">
                     <label for="">Name</label>
                     <div class="form-holder">
-
-                        @Html.EditorFor(model => model.Property_Name, new { htmlAttributes = new { @class = "form-control" } })
+                        <i class="fas fa-house-user"></i>
+                        @Html.EditorFor(model => model.Property_Name, new { htmlAttributes = new { @class = "form-control text-capitalize" } })
                         @Html.ValidationMessageFor(model => model.Property_Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -55,7 +51,7 @@
                     <label for="">State</label>
                     <div class="form-holder">
                         <i class="zmdi zmdi-city"></i>
-                        @Html.EditorFor(model => model.Property_State, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Property_State, new { htmlAttributes = new { @class = "form-control text-capitalize" } })
                         @Html.ValidationMessageFor(model => model.Property_State, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -65,7 +61,7 @@
                     <label for="">City</label>
                     <div class="form-holder">
                         <i class="zmdi zmdi-city"></i>
-                        @Html.EditorFor(model => model.Property_City, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Property_City, new { htmlAttributes = new { @class = "form-control text-capitalize" } })
                         @Html.ValidationMessageFor(model => model.Property_City, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -100,28 +96,16 @@
                 <div class="form-wrapper">
                     <label for="">BHK</label>
                     <div class="form-holder select">
-                        <select name="BHK" id="" class="form-control">
-                            <option value="">Select Option</option>
-                            <option value="1BHK">1BHK</option>
-                            <option value="2BHK">2BHK</option>
-                            <option value="3BHK">3BHK</option>
-                            <option value="4BHK">4BHK</option>
-                            <option value="5BHK">5BHK</option>
-                        </select>
+                        @Html.DropDownListFor(model=>model.Property_Information.BHK, ViewData["bhk"] as List<SelectListItem>, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Property_Information.BHK, "", new { @class = "text-danger" })
                         <i class="fa fa-bed"></i>
                     </div>
                 </div>
                 <div class="form-wrapper">
                     <label for="">Facing</label>
                     <div class="form-holder select">
-                        <select name="Facing" id="" class="form-control">
-                            <option value="">Select Option</option>
-                            <option value="North">North</option>
-                            <option value="East">East</option>
-                            <option value="West">West</option>
-                            <option value="South">South</option>
-
-                        </select>
+                        @Html.DropDownListFor(model=>model.Property_Information.Facing, ViewData["facing"] as List<SelectListItem>, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Facing, "", new { @class = "text-danger" })
                         <i class="zmdi zmdi-arrows"></i>
                     </div>
                 </div>
@@ -130,28 +114,16 @@
                 <div class="form-wrapper">
                     <label for="">Furnishing</label>
                     <div class="form-holder select">
-                        <select name="Furnishing" id="" class="form-control">
-                            <option value="">Select Option</option>
-                            <option value="Fully Furnished">Fully Furnished</option>
-                            <option value="Semi Furnished">Semi Furnished</option>
-                            <option value="Not Furnished">Not Furnished</option>
-
-
-                        </select>
+                        @Html.DropDownListFor(model => model.Property_Information.Furnishing, ViewData["furnish"] as List<SelectListItem>, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Furnishing, "", new { @class = "text-danger" })
                         <i class="fa fa-bed"></i>
                     </div>
                 </div>
                 <div class="form-wrapper">
                     <label for="">Preferred Tenants</label>
                     <div class="form-holder select">
-                        <select name="Tenants" id="" class="form-control">
-                            <option value="">Select Option</option>
-                            <option value="Family">Family</option>
-                            <option value="Bacholer">Bacholer</option>
-                            <option value="Family/Bacholer">Family/Bacholer</option>
-
-
-                        </select>
+                        @Html.DropDownListFor(model => model.Property_Information.Preferred_Tenants, ViewData["tenant"] as List<SelectListItem>, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Preferred_Tenants, "", new { @class = "text-danger" })
                         <i class="zmdi zmdi-face"></i>
                     </div>
                 </div>
@@ -160,7 +132,7 @@
                 <div class="form-wrapper">
                     <label for="">Property Age</label>
                     <div class="form-holder">
-
+                        <i class="fa fa-font"></i>
                         @Html.EditorFor(model => model.Property_Information.Age, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Property_Information.Age, "", new { @class = "text-danger" })
                     </div>
@@ -196,28 +168,22 @@
                 <div class="form-wrapper">
                     <label for="">Parking</label>
                     <div class="form-holder select">
-                        <select name="Parking" id="" class="form-control">
-                            <option value="">Select Option</option>
-                            <option value="Available">Available</option>
-                            <option value="Not Available">Not Available</option>
-                        </select>
+                        @Html.DropDownListFor(model => model.Property_Information.Parking, ViewData["parking"] as List<SelectListItem>, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Property_Information.Parking, "", new { @class = "text-danger" })
                         <i class="zmdi zmdi-car"></i>
                     </div>
                 </div>
                 <div class="form-wrapper">
                     <label for="">Status</label>
                     <div class="form-holder select">
-                        <select name="Status" id="" class="form-control">
-                            <option value="">Select Option</option>
-                            <option value="Available">Available</option>
-                            <option value="Not Available">Not Available</option>
-                        </select>
+                        @Html.DropDownListFor(model => model.Property_Status, ViewData["status"] as List<SelectListItem>, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Property_Status, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
             
             <center>
-                <button class="btn" type="submit" style="background-color: rgba(0, 171, 159, 0.73);color:white">Edit</button>
+                <button class="btn fa fa-edit" type="submit" style="background-color: rgba(0, 171, 159, 0.73);color:white">  Edit</button>
             </center>
 
 
@@ -225,4 +191,40 @@
     </div>
 
 </div>
+    
+<center>
+    <h3>ADD Images</h3>
+    @using (Html.BeginForm("Addimage", "Seller",new { id = Model.Property_ID }, FormMethod.Post, new {  enctype = "multipart/form-data"}))
+    {
+        <input type="file" multiple name="addimage" />
+        <button type="submit" class="btn fa fa-plus"style="background-color: rgba(0, 171, 159, 0.73);color:white;">Add</button>
+    }
+</center>
 
+<div class="container" style="margin-top:1%;">
+    <div class="row">
+        @foreach (var item in Model.Property_Images)
+        {
+
+            <div class="col-sm-4">
+                <div class="card">
+                    @{
+                        var images = item;
+                        if (images!=null)
+                        {
+                            var base64 = Convert.ToBase64String(images.Image);
+                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                            <img src='@imgsrc' style="height:200px;width:100%;border-radius:5px;" />
+                        }
+
+                    }
+                    <div class="card-body">
+                        <a href="~/Seller/DeleteImages/@item.img_id" class="btn" style="background-color: rgba(0, 171, 159, 0.73);color:white;">  Delete</a>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>

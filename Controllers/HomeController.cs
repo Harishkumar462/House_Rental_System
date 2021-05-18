@@ -12,7 +12,10 @@ namespace House_Rental_System.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            House_Rental Db = new House_Rental();
+            List<Property_Details> property = Db.Property_Details.Take(3).ToList<Property_Details>();
+            return View(property);
+            
         }
         public ActionResult SellerLogin()
         {
@@ -25,7 +28,7 @@ namespace House_Rental_System.Controllers
             var result = Db.Seller_Details.Where(m => m.Seller_Email == user && m.Seller_Password == pass).FirstOrDefault();
             if (result != null)
             {
-                Session["id"] = result.Seller_ID;
+                Session["sellerid"] = result.Seller_ID;
                
                 return RedirectToAction("Index", "Seller");
             }

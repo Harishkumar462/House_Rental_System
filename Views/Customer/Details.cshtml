@@ -23,7 +23,7 @@
                         var base64 = Convert.ToBase64String(image.Image);
                         var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                         <div class="carousel-item @active">
-                            <img class="d-block w-100" src="@imgsrc" alt="First slide"style="border-radius: 5px;">
+                            <img class="d-block w-100 h-100" src="@imgsrc" alt="First slide"style="border-radius: 5px; ">
                         </div>
                     }
                 </div>
@@ -49,7 +49,7 @@
             <div class="form-wrapper">
                 <label for="">Name</label>
                 <div class="form-holder">
-
+                    <i class="fas fa-house-user"></i>
                     @Html.EditorFor(model => model.Property_Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
 
                 </div>
@@ -149,7 +149,7 @@
             <div class="form-wrapper">
                 <label for="">Property Age</label>
                 <div class="form-holder">
-
+                    <i class="fa fa-font"></i>
                     @Html.EditorFor(model => model.Property_Information.Age, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "color:black;" } })
 
                 </div>

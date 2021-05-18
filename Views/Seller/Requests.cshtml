@@ -17,8 +17,8 @@
 
     }
        </style>
-<div>
-    <table class="table">
+<div class="table-responsive"> 
+    <table class="table table-success table-striped" style="margin-top:1%;">
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -33,8 +33,8 @@
         <td>@cd.Customer_Name</td>
         <td>@cd.Customer_Email</td>
         <td>@cd.Customer_Phone</td>
-        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit" style="color:cornflowerblue"></i>Details</button></td>
-        <td>
+        <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Details</button></td>
+        
             <div class="modal fade" tabindex="-1" id="exampleModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -84,9 +84,9 @@
                     </div>
                 </div>
             </div>
-        </td>
-        <td>
-        <td><button class="btn"><i class="fas fa-trash-alt" style="color:cornflowerblue"></i>@Html.ActionLink("Approve", "Confirmation",new {cid=cd.Customer_Id})</button></td>
+        
+        
+        <td><a href="~/Seller/Confirmation/@cd.Customer_Id" class="btn btn-secondary">Approve</a></td>
         
 
     </tr>
@@ -94,8 +94,3 @@
     </table>
 
 </div>
-
-        <p>
-
-            @Html.ActionLink("Back to List", "Index")
-        </p>

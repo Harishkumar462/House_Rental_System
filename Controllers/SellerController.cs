@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using System.Windows;
 
 namespace House_Rental_System.Controllers
@@ -19,7 +20,7 @@ namespace House_Rental_System.Controllers
         House_Rental Db = new House_Rental();
         public ActionResult Index()
         {
-            int id = (int)Session["id"];
+            int id = (int)Session["sellerid"];
             List<Property_Details> pd = Db.Property_Details.Where(m => m.Seller_Id==id).ToList<Property_Details>();
             int i = 0;
             int[] property_count = new int[pd.Count];
@@ -42,27 +43,57 @@ namespace House_Rental_System.Controllers
         }
         public ActionResult Indexs()
         {
-            int id = (int)Session["id"];
+            int id = (int)Session["sellerid"];
             List<Property_Details> pd = Db.Property_Details.Where(m => m.Seller_Id == id).ToList<Property_Details>();
             return View(pd);
         }
         public ActionResult AddProperty()
-        { 
+        {
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem { Text = "House", Value = "House" });
+            li.Add(new SelectListItem { Text = "Flat", Value = "Flat" });
+            ViewData["type"] = li;
+            List<SelectListItem> bhk = new List<SelectListItem>();
+            bhk.Add(new SelectListItem { Text = "1Bhk", Value = "1BHK" });
+            bhk.Add(new SelectListItem { Text = "2Bhk", Value = "2BHK" });
+            bhk.Add(new SelectListItem { Text = "3Bhk", Value = "3BHK" });
+            bhk.Add(new SelectListItem { Text = "4Bhk", Value = "4BHK" });
+            bhk.Add(new SelectListItem { Text = "5Bhk", Value = "5BHK" });
+            ViewData["bhk"] = bhk;
+            List<SelectListItem> facing = new List<SelectListItem>();
+            facing.Add(new SelectListItem { Text = "North", Value = "North" });
+            facing.Add(new SelectListItem { Text = "East", Value = "East" });
+            facing.Add(new SelectListItem { Text = "West", Value = "West" });
+            facing.Add(new SelectListItem { Text = "South", Value = "South" });
+            ViewData["facing"] = facing;
+            List<SelectListItem> furnish = new List<SelectListItem>();
+            furnish.Add(new SelectListItem { Text = "Fully Furnished", Value = "Fully Furnished" });
+            furnish.Add(new SelectListItem { Text = "Semi Furnished", Value = "Semi Furnished" });
+            furnish.Add(new SelectListItem { Text = "Not Furnished", Value = "Not Furnished" });
+            ViewData["furnish"] = furnish;
+            List<SelectListItem> tenant = new List<SelectListItem>();
+            tenant.Add(new SelectListItem { Text = "Family", Value = "Family" });
+            tenant.Add(new SelectListItem { Text = "Bacholer", Value = "Bacholer" });
+            tenant.Add(new SelectListItem { Text = "Family/Bacholer", Value = "Family/Bacholer" });
+            ViewData["tenant"] = tenant;
+            List<SelectListItem> parking = new List<SelectListItem>();
+            parking.Add(new SelectListItem { Text = "Available", Value = "Available" });
+            parking.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+            ViewData["parking"] = parking;
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem { Text = "Available", Value = "Available" });
+            status.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+            ViewData["status"] = status;
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult>    AddProperty(Property_Details pd,HttpPostedFileBase[] images,string Status, string Parking, string Tenants, string Furnishing, string Facing, string BHK, string Type)
+        public async Task<ActionResult>AddProperty(Property_Details pd,HttpPostedFileBase[] images)
         {
             if (ModelState.IsValid)
             {
-                pd.Seller_Id =(int) Session["id"];
-                pd.Property_Status = Status;
-                pd.Property_Type = Type;
-                pd.Property_Information.BHK = BHK;
-                pd.Property_Information.Facing = Facing;
-                pd.Property_Information.Furnishing = Furnishing;
-                pd.Property_Information.Parking = Parking;
-                pd.Property_Information.Preferred_Tenants = Tenants;
+                pd.Seller_Id =(int) Session["sellerid"];
+                
+                
                 Db.Property_Details.Add(pd);
                 await Db.SaveChangesAsync();
    
@@ -90,6 +121,41 @@ namespace House_Rental_System.Controllers
             }
             else
             {
+                List<SelectListItem> li = new List<SelectListItem>();
+                li.Add(new SelectListItem { Text = "House", Value = "House" });
+                li.Add(new SelectListItem { Text = "Flat", Value = "Flat" });
+                ViewData["type"] = li;
+                List<SelectListItem> bhk = new List<SelectListItem>();
+                bhk.Add(new SelectListItem { Text = "1Bhk", Value = "1BHK" });
+                bhk.Add(new SelectListItem { Text = "2Bhk", Value = "2BHK" });
+                bhk.Add(new SelectListItem { Text = "3Bhk", Value = "3BHK" });
+                bhk.Add(new SelectListItem { Text = "4Bhk", Value = "4BHK" });
+                bhk.Add(new SelectListItem { Text = "5Bhk", Value = "5BHK" });
+                ViewData["bhk"] = bhk;
+                List<SelectListItem> facing = new List<SelectListItem>();
+                facing.Add(new SelectListItem { Text = "North", Value = "North" });
+                facing.Add(new SelectListItem { Text = "East", Value = "East" });
+                facing.Add(new SelectListItem { Text = "West", Value = "West" });
+                facing.Add(new SelectListItem { Text = "South", Value = "South" });
+                ViewData["facing"] = facing;
+                List<SelectListItem> furnish = new List<SelectListItem>();
+                furnish.Add(new SelectListItem { Text = "Fully Furnished", Value = "Fully Furnished" });
+                furnish.Add(new SelectListItem { Text = "Semi Furnished", Value = "Semi Furnished" });
+                furnish.Add(new SelectListItem { Text = "Not Furnished", Value = "Not Furnished" });
+                ViewData["furnish"] = furnish;
+                List<SelectListItem> tenant = new List<SelectListItem>();
+                tenant.Add(new SelectListItem { Text = "Family", Value = "Family" });
+                tenant.Add(new SelectListItem { Text = "Bacholer", Value = "Bacholer" });
+                tenant.Add(new SelectListItem { Text = "Family/Bacholer", Value = "Family/Bacholer" });
+                ViewData["tenant"] = tenant;
+                List<SelectListItem> parking = new List<SelectListItem>();
+                parking.Add(new SelectListItem { Text = "Available", Value = "Available" });
+                parking.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+                ViewData["parking"] = parking;
+                List<SelectListItem> status = new List<SelectListItem>();
+                status.Add(new SelectListItem { Text = "Available", Value = "Available" });
+                status.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+                ViewData["status"] = status;
                 return View(pd);
             }
             return RedirectToAction("Index");
@@ -97,6 +163,7 @@ namespace House_Rental_System.Controllers
 
         public ActionResult Edit(int? id)
         {
+            Session["prop"] = id;
            
             if (id == null)
             {
@@ -107,57 +174,154 @@ namespace House_Rental_System.Controllers
             {
                 return HttpNotFound();
             }
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem { Text = "House", Value = "House" });
+            li.Add(new SelectListItem { Text = "Flat", Value = "Flat" });
+            ViewData["type"] = li;
+            List<SelectListItem> bhk = new List<SelectListItem>();
+            bhk.Add(new SelectListItem { Text = "1Bhk", Value = "1BHK" });
+            bhk.Add(new SelectListItem { Text = "2Bhk", Value = "2BHK" });
+            bhk.Add(new SelectListItem { Text = "3Bhk", Value = "3BHK" });
+            bhk.Add(new SelectListItem { Text = "4Bhk", Value = "4BHK" });
+            bhk.Add(new SelectListItem { Text = "5Bhk", Value = "5BHK" });
+            ViewData["bhk"] = bhk;
+            List<SelectListItem> facing = new List<SelectListItem>();
+            facing.Add(new SelectListItem { Text = "North", Value = "North" });
+            facing.Add(new SelectListItem { Text = "East", Value = "East" });
+            facing.Add(new SelectListItem { Text = "West", Value = "West" });
+            facing.Add(new SelectListItem { Text = "South", Value = "South" });
+            ViewData["facing"] = facing;
+            List<SelectListItem> furnish = new List<SelectListItem>();
+            furnish.Add(new SelectListItem { Text = "Fully Furnished", Value = "Fully Furnished" });
+            furnish.Add(new SelectListItem { Text = "Semi Furnished", Value = "Semi Furnished" });
+            furnish.Add(new SelectListItem { Text = "Not Furnished", Value = "Not Furnished" });
+            ViewData["furnish"] = furnish;
+            List<SelectListItem> tenant = new List<SelectListItem>();
+            tenant.Add(new SelectListItem { Text = "Family", Value = "Family" });
+            tenant.Add(new SelectListItem { Text = "Bacholer", Value = "Bacholer" });
+            tenant.Add(new SelectListItem { Text = "Family/Bacholer", Value = "Family/Bacholer" });
+            ViewData["tenant"] = tenant;
+            List<SelectListItem> parking = new List<SelectListItem>();
+            parking.Add(new SelectListItem { Text = "Available", Value = "Available" });
+            parking.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+            ViewData["parking"] = parking;
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem { Text = "Available", Value = "Available" });
+            status.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+            ViewData["status"] = status;
             return View(property_Details);
         }
 
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Property_Details property_Details, string Status, string Parking, string Tenants, string Furnishing, string Facing, string BHK, string Type)
+        public ActionResult Edit( Property_Details property_Details)
         {
-            
-            if (ModelState.IsValid)
-            {
-                try { 
-                System.Diagnostics.Debug.WriteLine(property_Details.Property_Information.Total_Floor);
-                property_Details.Seller_Id = (int)Session["id"];
 
-                Property_Details pd = Db.Property_Details.First(m => m.Property_ID == property_Details.Property_ID);
-                pd.Property_Status = Status;
-                pd.Property_Type = Type;
+            if (ModelState.IsValid)
+            { 
+                property_Details.Seller_Id = (int)Session["sellerid"];
+                int id = (int)Session["prop"];
+                Property_Details pd = Db.Property_Details.First(m => m.Property_ID == id);
+                pd.Property_Status = property_Details.Property_Status;
+                pd.Property_Type = property_Details.Property_Type;
                 pd.Property_Address = property_Details.Property_Address;
                 pd.Property_City = property_Details.Property_City;
                 pd.Property_Name = property_Details.Property_Name;
                 pd.Property_Pin = property_Details.Property_Pin;
                 pd.Property_State = property_Details.Property_State;
-                
+
                 pd.Seller_Id = property_Details.Seller_Id;
 
-                Property_Information pi = Db.Property_Information.First(m => m.Property_ID == property_Details.Property_ID);
+                Property_Information pi = Db.Property_Information.First(m => m.Property_ID == id);
                 pi.Total_Floor = property_Details.Property_Information.Total_Floor;
                 pi.Age = property_Details.Property_Information.Age;
                 pi.ExpectedRent = property_Details.Property_Information.ExpectedRent;
                 pi.Expected_Deposit = property_Details.Property_Information.Expected_Deposit;
                 pi.Floor = property_Details.Property_Information.Floor;
                 pi.Size = property_Details.Property_Information.Size;
-                pi.BHK = BHK;     
-                pi.Facing = Facing;
-                pi.Furnishing = Furnishing;
-                pi.Parking = Parking;
-                pi.Preferred_Tenants = Tenants;
-                
+                pi.BHK = property_Details.Property_Information.BHK;
+                pi.Facing = property_Details.Property_Information.Facing;
+                pi.Furnishing = property_Details.Property_Information.Furnishing;
+                pi.Parking = property_Details.Property_Information.Parking;
+                pi.Preferred_Tenants = property_Details.Property_Information.Preferred_Tenants;
+                Session.Remove("prop");
                 Db.SaveChanges();
-                }
-                catch
-                {
-                    return View(property_Details);
-                }
-
-
                 return RedirectToAction("Index");
             }
-            ViewBag.Seller_Id = new SelectList(Db.Seller_Details, "Seller_ID", "Seller_Name", property_Details.Seller_Id);
-            return View(property_Details);
+            else
+            {
+                List<SelectListItem> li = new List<SelectListItem>();
+                li.Add(new SelectListItem { Text = "House", Value = "House" });
+                li.Add(new SelectListItem { Text = "Flat", Value = "Flat" });
+                ViewData["type"] = li;
+                List<SelectListItem> bhk = new List<SelectListItem>();
+                bhk.Add(new SelectListItem { Text = "1Bhk", Value = "1BHK" });
+                bhk.Add(new SelectListItem { Text = "2Bhk", Value = "2BHK" });
+                bhk.Add(new SelectListItem { Text = "3Bhk", Value = "3BHK" });
+                bhk.Add(new SelectListItem { Text = "4Bhk", Value = "4BHK" });
+                bhk.Add(new SelectListItem { Text = "5Bhk", Value = "5BHK" });
+                ViewData["bhk"] = bhk;
+                List<SelectListItem> facing = new List<SelectListItem>();
+                facing.Add(new SelectListItem { Text = "North", Value = "North" });
+                facing.Add(new SelectListItem { Text = "East", Value = "East" });
+                facing.Add(new SelectListItem { Text = "West", Value = "West" });
+                facing.Add(new SelectListItem { Text = "South", Value = "South" });
+                ViewData["facing"] = facing;
+                List<SelectListItem> furnish = new List<SelectListItem>();
+                furnish.Add(new SelectListItem { Text = "Fully Furnished", Value = "Fully Furnished" });
+                furnish.Add(new SelectListItem { Text = "Semi Furnished", Value = "Semi Furnished" });
+                furnish.Add(new SelectListItem { Text = "Not Furnished", Value = "Not Furnished" });
+                ViewData["furnish"] = furnish;
+                List<SelectListItem> tenant = new List<SelectListItem>();
+                tenant.Add(new SelectListItem { Text = "Family", Value = "Family" });
+                tenant.Add(new SelectListItem { Text = "Bacholer", Value = "Bacholer" });
+                tenant.Add(new SelectListItem { Text = "Family/Bacholer", Value = "Family/Bacholer" });
+                ViewData["tenant"] = tenant;
+                List<SelectListItem> parking = new List<SelectListItem>();
+                parking.Add(new SelectListItem { Text = "Available", Value = "Available" });
+                parking.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+                ViewData["parking"] = parking;
+                List<SelectListItem> status = new List<SelectListItem>();
+                status.Add(new SelectListItem { Text = "Available", Value = "Available" });
+                status.Add(new SelectListItem { Text = "Not Available", Value = "Not Available" });
+                ViewData["status"] = status;
+                return View(property_Details);
+            }
+        }
+        public ActionResult Addimage(HttpPostedFileBase[] addimage, int id)
+        {
+            if (addimage.Length > 0)
+            {
+                foreach (var image in addimage)
+                {
+                    if (image != null)
+                    {
+                        BinaryReader binary = new BinaryReader(image.InputStream);
+                        Property_Images pi = new Property_Images
+                        {
+                            Property_Id = id,
+                            Image = binary.ReadBytes((int)image.ContentLength)
+                        };
+                        Db.Property_Images.Add(pi);
+                    }
+
+                }
+                Db.SaveChanges();
+                return RedirectToAction("Edit", new { id = id });
+            }
+            else
+            {
+                return RedirectToAction("Edit", new { id = id });
+            }
+        }
+        public ActionResult DeleteImages(int id)
+        {
+            var img = Db.Property_Images.Where(m => m.img_id == id).FirstOrDefault();
+            int pid = img.Property_Id;
+            Db.Property_Images.Remove(img);
+            Db.SaveChanges();
+            return RedirectToAction("Edit", new { id = pid });
         }
         public ActionResult Profile()
         {
@@ -190,7 +354,7 @@ namespace House_Rental_System.Controllers
             }
             else
             {
-                int id = (int)Session["id"];
+                int id = (int)Session["sellerid"];
                 var img = Db.Seller_Details.Where(m => m.Seller_ID == id).Select(m => m.Seller_Photo).FirstOrDefault();
                 if (img != null)
                 {
@@ -199,7 +363,7 @@ namespace House_Rental_System.Controllers
             }
             if (ModelState.IsValid)
             {
-                sd.Seller_ID = (int)Session["id"];
+                sd.Seller_ID = (int)Session["sellerid"];
                 Db.Entry(sd).State = EntityState.Modified;
                 Db.SaveChanges();
                 return RedirectToAction("Profile");
@@ -237,9 +401,9 @@ namespace House_Rental_System.Controllers
             ViewBag.cds = cd;
             return View();
         }
-        public ActionResult Confirmation(int cid)
+        public ActionResult Confirmation(int id)
         {
-            Session["customerid"] = cid;
+            Session["customerid"] = id;
             return View();
 
         }
@@ -248,7 +412,7 @@ namespace House_Rental_System.Controllers
         {
             sp.Customer_Id = (int)Session["customerid"];
             sp.Property_Id = (int)Session["propertyid"];
-            sp.Seller_Id = (int)Session["id"];
+            sp.Seller_Id = (int)Session["sellerid"];
             sp.Date_of_Sale = DateTime.Now.ToString();
             Db.Sold_Property.Add(sp);
             Db.SaveChanges();
@@ -285,7 +449,7 @@ namespace House_Rental_System.Controllers
 
         public ActionResult SoldProperty()
         {
-            int id = (int)Session["id"];
+            int id = (int)Session["sellerid"];
             List<Sold_Property> sold_Property = Db.Sold_Property.Where(m => m.Seller_Id == id).ToList<Sold_Property>();
             return View(sold_Property);
             

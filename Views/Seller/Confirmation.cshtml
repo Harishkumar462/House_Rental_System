@@ -2,44 +2,42 @@
 
 @{
     ViewBag.Title = "Confirmation";
-    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    Layout = "~/Views/Shared/_SellerLayout.cshtml";
 }
 
-<h2>Confirmation</h2>
+<head>
 
-@using (Html.BeginForm("Confirmation","Seller",FormMethod.Post,new { cid = ViewBag.cid,pid =ViewBag.pid}))
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Sold_Property</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Deposit_Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Deposit_Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Deposit_Amount, "", new { @class = "text-danger" })
+    <link href="~/assets/form/css/style.css" rel="stylesheet" />
+    <link href="~/assets/form/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" />
+</head>
+<div class="wrapper">
+    <div class="inner">
+        @using (Html.BeginForm("Confirmation", "Seller", FormMethod.Post, new { cid = ViewBag.cid, pid = ViewBag.pid }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <h3>Confirmation</h3>
+            <div class="form-group">
+                <div class="form-wrapper">
+                    <label for="">Deposit Amount</label>
+                    <div class="form-holder">
+                        <i class="fa fa-rupee"></i>
+                        @Html.EditorFor(model => model.Deposit_Amount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Deposit_Amount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Rent Amount</label>
+                    <div class="form-holder">
+                        <i class="fa fa-rupee"></i>
+                        @Html.EditorFor(model => model.Rental_Amount, new { htmlAttributes = new { @class = "form-control text-capitalize" } })
+                        @Html.ValidationMessageFor(model => model.Rental_Amount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Rental_Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Rental_Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Rental_Amount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+            <center>
+                <button class="btn " type="submit" style="background-color: rgba(0, 171, 159, 0.73);color:white">  Confirm</button>
+            </center>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>

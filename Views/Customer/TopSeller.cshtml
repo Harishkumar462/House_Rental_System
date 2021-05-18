@@ -1,0 +1,47 @@
+﻿@model IEnumerable<House_Rental_System.Models.Seller_Details>
+
+@{
+    ViewBag.Title = "TopSeller";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table table-success table-striped" style="margin-top:1%;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Seller_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seller_Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seller_Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seller_state)
+            </th>
+            <th>Property Sold</th>
+        </tr>
+        @{ int count = 0;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seller_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seller_Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seller_Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seller_state)
+                </td>
+                <td>@ViewBag.count[count]</td>
+                @{count++; }
+            </tr>
+        }
+
+    </table>
+</div>
